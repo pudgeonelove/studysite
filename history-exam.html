@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="История KG">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <title>Госэкзамен по истории Кыргызстана - 9 класс</title>
+  <style>
+    :root {
+      --paper: #f7f7f2;
+      --white: #ffffff;
+      --ink: #172133;
+      --muted: #5f6978;
+      --line: rgba(23, 33, 51, 0.12);
+      --red: #c74343;
+      --blue: #2866d6;
+      --green: #0d947f;
+      --gold: #d89026;
+      --violet: #7353ba;
+      --shadow: 0 22px 60px rgba(23, 33, 51, 0.14);
+      --radius: 8px;
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(247, 247, 242, 0.82), rgba(247, 247, 242, 0.98)),
+        url("assets/study-map.png") center top / cover no-repeat fixed,
+        var(--paper);
+      letter-spacing: 0;
+      overflow-x: hidden;
+      overflow-wrap: anywhere;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(23, 33, 51, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 33, 51, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.78), transparent 72%);
+    }
+
+    a { color: inherit; }
+
+    button { border: 0; cursor: pointer; font: inherit; touch-action: manipulation; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: calc(20px + env(safe-area-inset-top)) 0 calc(52px + env(safe-area-inset-bottom));
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      min-height: 62px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      box-shadow: 0 14px 28px rgba(199, 67, 67, 0.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.05rem, 1rem + 0.7vw, 1.5rem);
+      line-height: 1.1;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .button,
+    .primary {
+      min-height: 42px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      text-decoration: none;
+      font-weight: 780;
+      white-space: nowrap;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 16px 34px rgba(199, 67, 67, 0.22);
+    }
+
+    .button:hover,
+    .primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      min-height: 330px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(270px, 0.8fr);
+      align-items: end;
+      gap: 28px;
+      padding: clamp(24px, 4vw, 52px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.70)),
+        linear-gradient(90deg, rgba(199, 67, 67, 0.17), rgba(216, 144, 38, 0.14));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--green), var(--blue));
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--red);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    .hero h2 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2.2rem, 1.4rem + 4vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: #354052;
+      line-height: 1.68;
+      font-size: clamp(1rem, 0.96rem + 0.32vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .fact-grid {
+      display: grid;
+      gap: 10px;
+      align-self: stretch;
+      align-content: end;
+    }
+
+    .fact {
+      min-height: 78px;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      display: grid;
+      gap: 5px;
+    }
+
+    .fact strong {
+      font-size: 1.55rem;
+      line-height: 1;
+    }
+
+    .fact span {
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 0.9rem;
+    }
+
+    .notice {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(216, 144, 38, 0.28);
+      background: rgba(255, 247, 232, 0.86);
+      color: #65410e;
+      line-height: 1.55;
+    }
+
+    .section-title {
+      margin: 34px 0 16px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: clamp(1.25rem, 1.02rem + 1vw, 1.8rem);
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card,
+    .wide-card,
+    .ticket-card,
+    .source-panel {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      box-shadow: 0 14px 42px rgba(23, 33, 51, 0.09);
+    }
+
+    .card {
+      padding: 17px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .card h4,
+    .wide-card h4,
+    .ticket-card h4 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .card p,
+    .ticket-card p {
+      margin: 0;
+      color: #354052;
+      line-height: 1.62;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .wide-card {
+      padding: clamp(18px, 3vw, 28px);
+      border-left: 5px solid var(--accent, var(--red));
+    }
+
+    .wide-card p {
+      margin: 12px 0 0;
+      color: #303c4d;
+      line-height: 1.78;
+    }
+
+    .wide-card ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #344052;
+      line-height: 1.68;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .chip {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      color: #344052;
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .ticket-card {
+      min-height: 260px;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      text-align: left;
+    }
+
+    .ticket-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: var(--accent, var(--red));
+    }
+
+    .ticket-card:hover,
+    .ticket-card:focus-visible {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 54px rgba(23, 33, 51, 0.16);
+      outline: 0;
+      border-color: color-mix(in srgb, var(--accent, var(--red)) 30%, #ffffff);
+    }
+
+    .ticket-card:active {
+      transform: translateY(-2px);
+    }
+
+    .ticket-card ol {
+      margin: 0;
+      padding-left: 20px;
+      color: #303c4d;
+      line-height: 1.52;
+    }
+
+    .answer-plan {
+      margin: 0;
+      padding-left: 18px;
+      color: #4c5667;
+      line-height: 1.56;
+      font-size: 0.93rem;
+    }
+
+    .open-hint {
+      color: var(--red);
+      font-weight: 850;
+      font-size: 0.9rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.46);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-backdrop[hidden] {
+      display: none;
+    }
+
+    .modal-card {
+      width: min(960px, 100%);
+      max-height: min(86vh, 860px);
+      overflow: auto;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.92)),
+        var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      box-shadow: 0 28px 90px rgba(15, 23, 42, 0.34);
+      transform: translateY(18px) scale(0.97);
+      transition: transform 260ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .modal-backdrop.open .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-head h3 {
+      margin: 7px 0 0;
+      font-size: clamp(1.35rem, 1.1rem + 1.25vw, 2.15rem);
+      line-height: 1.08;
+    }
+
+    .modal-close {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      background: rgba(23, 33, 51, 0.08);
+      color: var(--ink);
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(199, 67, 67, 0.12);
+      transform: rotate(4deg);
+    }
+
+    .modal-body {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .modal-section {
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.86);
+      animation: sectionIn 360ms ease both;
+    }
+
+    .modal-section:nth-child(2) { animation-delay: 60ms; }
+    .modal-section:nth-child(3) { animation-delay: 120ms; }
+
+    @keyframes sectionIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-section h4 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .modal-section p {
+      margin: 0;
+      color: #303c4d;
+      line-height: 1.78;
+    }
+
+    .modal-section p + p {
+      margin-top: 12px;
+    }
+
+    .key-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #303c4d;
+      line-height: 1.66;
+    }
+
+    .ticket-questions {
+      margin: 0;
+      padding-left: 20px;
+      color: #303c4d;
+      line-height: 1.58;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .exam-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .quiz-box {
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(40, 102, 214, 0.2);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 14px 42px rgba(23, 33, 51, 0.09);
+    }
+
+    .quiz-box h4 {
+      margin: 0 0 12px;
+    }
+
+    .question {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.92);
+      margin-top: 10px;
+    }
+
+    .question strong {
+      line-height: 1.42;
+    }
+
+    .answer {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .answer input { accent-color: var(--red); }
+
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(13, 148, 127, 0.22);
+      background: rgba(240, 250, 247, 0.92);
+      color: #204d44;
+      line-height: 1.5;
+    }
+
+    .source-panel {
+      margin-top: 22px;
+      padding: 18px;
+    }
+
+    .source-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .source-panel p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .source-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .source-list a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 0.88rem;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: rgba(23, 33, 51, 0.66);
+      line-height: 1.5;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 1020px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ticket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      body { background-attachment: scroll; }
+      .shell { width: min(100% - 22px, 760px); padding-top: 10px; }
+      .topbar,
+      .hero,
+      .exam-layout { grid-template-columns: 1fr; }
+      .topbar { align-items: start; }
+    }
+
+    @media (max-width: 560px) {
+      .cards,
+      .ticket-grid { grid-template-columns: 1fr; }
+      .hero,
+      .wide-card,
+      .quiz-box { padding: 18px; }
+      .button,
+      .primary { width: 100%; }
+
+      .modal-backdrop {
+        padding: 0;
+        place-items: stretch;
+      }
+
+      .modal-card {
+        width: 100%;
+        min-height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .modal-head {
+        padding-top: calc(14px + env(safe-area-inset-top));
+      }
+
+      .modal-body {
+        padding-bottom: calc(18px + env(safe-area-inset-bottom));
+      }
+
+      .ticket-card {
+        min-height: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">Э</div>
+        <div>
+          <h1>Госэкзамен по истории Кыргызстана</h1>
+          <p>9 класс - устный ответ, билеты, повторение и тренажер</p>
+        </div>
+      </div>
+      <a class="button" href="index.html">← Ко всем предметам</a>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">9 класс • Кыргызстан • история</p>
+        <h2>Готовь ответ как историк</h2>
+        <p class="hero-copy">Эта страница собрана по открытым материалам KAO, опубликованным экзаменационным вопросам и школьным источникам. Здесь не копируются готовые ответы из пособий: каждый блок помогает самому построить сильный устный ответ - с датой, причиной, личностями, итогом и значением.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#tickets">Тренировать билеты</a>
+          <a class="button" href="#plan">План ответа</a>
+          <a class="button" href="#quiz">Мини-проверка</a>
+        </div>
+      </div>
+      <div class="fact-grid">
+        <div class="fact"><strong>25</strong><span>типовых билетов в методических рекомендациях KAO</span></div>
+        <div class="fact"><strong>50</strong><span>тем: два вопроса в каждом билете</span></div>
+        <div class="fact"><strong>устно</strong><span>формат экзамена по найденному расписанию ИГА 2025</span></div>
+      </div>
+    </section>
+
+    <div class="notice">Актуальность: в открытых источниках найдены расписания ИГА за 2024-2025 учебный год, где история Кыргызстана у 9 класса указана как устный экзамен 16 июня 2025 года. Для 2025-2026 учебного года проверь дату у школы и по приказу Минпросвещения, потому что официальные даты могли обновиться.</div>
+
+    <section class="section-title">
+      <h3 id="plan">Как строить устный ответ</h3>
+      <p>Один ответ лучше держать в пределах 3-5 минут.</p>
+    </section>
+    <div class="cards">
+      <article class="card">
+        <span class="chip">1</span>
+        <h4>Рамки</h4>
+        <p>Назови век, годы или период и покажи территорию: Тенир-Тоо, Енисей, Фергана, Чуй, Алай, Северный или Южный Кыргызстан.</p>
+      </article>
+      <article class="card">
+        <span class="chip">2</span>
+        <h4>Причины</h4>
+        <p>Объясни, почему событие произошло: власть, земля, налоги, миграция, торговля, война, реформы или внешняя политика.</p>
+      </article>
+      <article class="card">
+        <span class="chip">3</span>
+        <h4>Личности</h4>
+        <p>Назови 1-3 человека и их роль. Не просто перечисляй имена: связывай личность с решением, движением или этапом.</p>
+      </article>
+      <article class="card">
+        <span class="chip">4</span>
+        <h4>Итог</h4>
+        <p>Заверши значением темы: как событие изменило государственность, культуру, общество или место Кыргызстана в регионе.</p>
+      </article>
+    </div>
+
+    <section class="section-title">
+      <h3>Крупные блоки повторения</h3>
+      <p>Иди от древности к современности, а не прыгай по датам.</p>
+    </section>
+    <div class="timeline">
+      <article class="wide-card" style="--accent:#c74343">
+        <h4>1. Древнейшая история и ранние народы</h4>
+        <p>Начни с археологических памятников каменного и бронзового веков: они показывают, что территория современного Кыргызстана была заселена задолго до появления письменных источников. В ответе важно объяснить, какие следы прошлого дают археология, антропология, нумизматика и письменные свидетельства соседних цивилизаций.</p>
+        <p>Затем переходи к сакам, усуням и Давани. Эти темы помогают раскрыть раннюю государственность, кочевое и оседлое хозяйство, торговые связи и значение Ферганской долины. Не превращай ответ в список племен: покажи, как природная среда, скотоводство, земледелие и военное дело влияли на жизнь общества.</p>
+        <ul>
+          <li>Опорные слова: археология, Тенир-Тоо, саки, усуни, Давань, Великий шелковый путь.</li>
+          <li>Типовой вывод: ранняя история региона показывает связь кочевой и оседлой культур.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#d89026">
+        <h4>2. Тюркская эпоха, Енисейские кыргызы и Барсбек</h4>
+        <p>Тюркские каганаты важны как эпоха политического объединения степей, военной организации и развития письменной культуры. Для истории кыргызов особенно важны Енисейские кыргызы и борьба за самостоятельность в Центральной Азии. В ответе держи линию: территория - власть - хозяйство - культура - международные связи.</p>
+        <p>Барсбек каган и Кыргызское великодержавие помогают говорить о государственности, дипломатии и борьбе за влияние. Если экзаменатор задает уточняющий вопрос, можно объяснить, почему Енисей и Тенир-Тоо часто рассматриваются как связанные исторические пространства кыргызов.</p>
+        <ul>
+          <li>Опорные слова: каганат, Енисей, Барсбек, Алп Сол, руническая письменность.</li>
+          <li>Типовой вывод: эта эпоха показывает ранние формы кыргызской политической организации.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#0d947f">
+        <h4>3. Средневековье: Караханиды, Баласагуни, Кашгари, Моголистан</h4>
+        <p>Средневековый блок часто вызывает путаницу, потому что государств и названий много. Раздели его на три слоя: политическая история, городская культура и духовно-письменное наследие. Караханиды важны через исламизацию, города, торговлю и культурный подъем. Жусуп Баласагуни и Махмуд Кашгари показывают, что история изучается не только по войнам, но и по текстам.</p>
+        <p>Моголистан, государство Хайду и постмонгольская эпоха показывают изменение политической карты Центральной Азии. В ответе не пытайся подробно перечислить все войны: лучше объясни, как монгольское завоевание и новые политические союзы изменили жизнь региона.</p>
+        <ul>
+          <li>Опорные слова: Караханиды, Баласагуни, Кашгари, ислам, города, Моголистан.</li>
+          <li>Типовой вывод: средневековье связывает государственность, письменную культуру и международную торговлю.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#7353ba">
+        <h4>4. XVI-XIX века: формирование народа, Коканд, Алай, Ормон хан</h4>
+        <p>В этом блоке важно говорить о формировании кыргызского народа, роли родоплеменных объединений, борьбе за самостоятельность и отношениях с соседними государствами. Мухаммед Кыргыз, Ормон хан, Курманджан датка, Нусуп бий, Алымбек датка, Тайлак батыр и другие личности помогают показать, что история создается конкретными решениями и действиями.</p>
+        <p>Кокандское ханство нельзя описывать только как внешнюю силу. В регионе жили разные народы, а кыргызские правители участвовали в политических процессах, сопротивлении и управлении. В устном ответе лучше показать баланс: зависимость, сопротивление, дипломатия, местные лидеры и последствия для общества.</p>
+        <ul>
+          <li>Опорные слова: Мухаммед Кыргыз, Коканд, Ормон хан, Курманджан датка, Тайлак батыр, Алай.</li>
+          <li>Типовой вывод: XIX век подготовил переход к новой политической ситуации в регионе.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#2c7a99">
+        <h4>5. Российская империя, реформы и 1916 год</h4>
+        <p>Присоединение Северного Кыргызстана к России объясняй через внешнеполитическую обстановку, Кокандское ханство, местные элиты и интересы Российской империи. Шабдан батыр, Байтик батыр, Атаке бий и первые дипломатические контакты помогают раскрыть тему не как одну дату, а как длительный процесс.</p>
+        <p>1916 год - один из самых важных и чувствительных вопросов. Ответ строится спокойно: причины, мобилизационный указ, ход восстания, подавление, последствия и историческая память. Не ограничивайся эмоцией: экзаменационный ответ должен показывать понимание социальных, земельных и политических причин.</p>
+        <ul>
+          <li>Опорные слова: присоединение, дипломатия, земельный вопрос, мобилизация, Уркун, память.</li>
+          <li>Типовой вывод: события начала XX века сильно повлияли на национальное самосознание.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#9b5b2e">
+        <h4>6. Советская власть, автономия, реформы и репрессии</h4>
+        <p>Советский блок удобно делить на этапы: установление власти, гражданская война, земельно-водные реформы, национально-государственное строительство, коллективизация, индустриализация, культура и репрессии. При ответе на тему автономии называй 1924, 1926 и 1936 годы как важные точки становления советской государственности Кыргызстана.</p>
+        <p>Массовые репрессии и "Ата-Бейит" требуют аккуратного ответа: называй причины тоталитарного давления, последствия для интеллигенции и общества, значение памяти. Личности Жусупа Абдрахманова, Абдыкадыра Орозбекова, Ишеналы Арабаева и Абдыкерима Сыдыкова помогают сделать ответ конкретным.</p>
+        <ul>
+          <li>Опорные слова: советская власть, автономия, Кыргызская ССР, коллективизация, репрессии, Ата-Бейит.</li>
+          <li>Типовой вывод: советский период сочетал модернизацию, государственное строительство и тяжелые потери.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#2866d6">
+        <h4>7. Великая Отечественная война и послевоенное развитие</h4>
+        <p>В теме войны важно показать вклад Кыргызстана фронту и тылу: мобилизация людей, труд в сельском хозяйстве и промышленности, эвакуация предприятий и людей, помощь фронту, подвиги воинов-кыргызстанцев. Хороший ответ связывает личный героизм и работу всей республики.</p>
+        <p>Послевоенный блок раскрывай через восстановление хозяйства, образование, науку, культуру и руководство Исхака Раззакова. Для периода 1960-1980-х годов полезно упоминать Турдакуна Усубалиева, урбанизацию, индустриальные объекты, социальную инфраструктуру и противоречия позднесоветской системы.</p>
+        <ul>
+          <li>Опорные слова: фронт, тыл, эвакуация, восстановление, Раззаков, Усубалиев.</li>
+          <li>Типовой вывод: послевоенные десятилетия изменили экономику, образование и городскую среду Кыргызстана.</li>
+        </ul>
+      </article>
+
+      <article class="wide-card" style="--accent:#4a6f3a">
+        <h4>8. Суверенная Кыргызская Республика и современность</h4>
+        <p>Современный блок обычно включает независимость, государственные символы, Конституцию, внешнюю политику, образование, культуру, экономику и политические изменения. Начинай с 31 августа 1991 года, затем объясняй, что суверенитет означает самостоятельность во внутренней и внешней политике.</p>
+        <p>Современные вопросы лучше отвечать без резких оценок. Дай факты, причины и последствия: международное признание, собственная валюта, развитие институтов, реформы, общественно-политические изменения, связи с соседними странами и международными организациями. Заверши тем, что изучение современной истории помогает понимать ответственность гражданина.</p>
+        <ul>
+          <li>Опорные слова: независимость, Конституция, символы, сом, внешняя политика, гражданство.</li>
+          <li>Типовой вывод: современная история связывает прошлое народа с сегодняшним устройством государства.</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="section-title">
+      <h3 id="tickets">Тренажер типовых билетов</h3>
+      <p>Формулировки пересказаны по смыслу, чтобы учить содержание, а не механически копировать список.</p>
+    </section>
+    <div class="toolbar">
+      <button class="primary" type="button" id="randomTicket">Случайный билет</button>
+      <span class="chip" id="chosenTicket">Выбери билет для устной тренировки</span>
+    </div>
+    <section class="ticket-grid" id="ticketGrid"></section>
+
+    <section class="section-title">
+      <h3>План на 14 дней</h3>
+      <p>Реальный темп: немного каждый день и один полный устный прогон через день.</p>
+    </section>
+    <div class="exam-layout">
+      <article class="wide-card" style="--accent:#c74343">
+        <h4>Неделя 1: собрать каркас</h4>
+        <p>День 1-2: древняя история, саки, усуни, Давань, археология. День 3-4: тюркские каганаты, Енисейские кыргызы, Барсбек, Кыргызское великодержавие. День 5: Караханиды, Кашгари, Баласагуни, средневековые памятники. День 6: Коканд, Ормон хан, Курманджан датка, Алай. День 7: повтори все даты и проговори 5 случайных билетов.</p>
+        <p>В конце недели сделай одну таблицу: период, территория, личности, 3 факта, значение. Она заменит хаотичные записи и поможет быстро повторять перед экзаменом.</p>
+      </article>
+      <article class="wide-card" style="--accent:#0d947f">
+        <h4>Неделя 2: научиться говорить</h4>
+        <p>День 8-9: присоединение к России, 1916 год, первые просветители. День 10-11: советская власть, автономия, реформы, репрессии. День 12: Великая Отечественная война и послевоенное развитие. День 13: независимость, Конституция, символы, внешняя политика. День 14: полный устный прогон 10 билетов с таймером.</p>
+        <p>Записывай себя на диктофон. Слушай не голос, а структуру: есть ли дата, причина, личности, последствия и вывод. Если ответ разваливается, не учи больше текста - сначала поправь план.</p>
+      </article>
+    </div>
+
+    <section class="section-title">
+      <h3 id="quiz">Мини-проверка</h3>
+      <p>Короткий тест перед устной тренировкой.</p>
+    </section>
+    <section class="quiz-box">
+      <h4>Проверка опорных фактов</h4>
+      <form id="quizForm">
+        <div class="question">
+          <strong>1. С какой датой связывают провозглашение независимости Кыргызской Республики?</strong>
+          <label class="answer"><input type="radio" name="q0" value="0"> 31 августа 1991 года</label>
+          <label class="answer"><input type="radio" name="q0" value="1"> 9 мая 1945 года</label>
+          <label class="answer"><input type="radio" name="q0" value="2"> 14 октября 1924 года</label>
+        </div>
+        <div class="question">
+          <strong>2. Какой элемент должен быть в сильном устном ответе?</strong>
+          <label class="answer"><input type="radio" name="q1" value="0"> Только длинный пересказ без вывода</label>
+          <label class="answer"><input type="radio" name="q1" value="1"> Время, территория, причины, личности, итог</label>
+          <label class="answer"><input type="radio" name="q1" value="2"> Только одно имя без объяснения</label>
+        </div>
+        <div class="question">
+          <strong>3. Что помогает раскрыть тему 1916 года?</strong>
+          <label class="answer"><input type="radio" name="q2" value="0"> Причины, мобилизационный указ, ход, последствия и память</label>
+          <label class="answer"><input type="radio" name="q2" value="1"> Только название месяца</label>
+          <label class="answer"><input type="radio" name="q2" value="2"> Только формула вероятности</label>
+        </div>
+        <button class="primary" type="submit">Проверить</button>
+      </form>
+      <div id="quizResult"></div>
+    </section>
+
+    <section class="source-panel">
+      <h3>Источники</h3>
+      <p>Страница использует открытые источники для структуры экзамена и школьного контекста. Тексты внутри страницы написаны как авторские конспекты и тренажеры.</p>
+      <div class="source-list">
+        <a href="https://www.kao.kg/images/stories/doc/217_007.pdf" target="_blank" rel="noreferrer">KAO: "Экзаменге даярданабыз"</a>
+        <a href="https://48.edubish.kg/wp-content/uploads/sites/79/2025/05/ekzamenatsionnye-voprosy-9-kl.pdf" target="_blank" rel="noreferrer">Вопросы госэкзамена 9 класса</a>
+        <a href="https://ru.kabar.kg/news/v-kyrgyzstane-nachalis-itogovye-ekzameny-dlya-vypusknikov-9-h-i-11-h-klassov/" target="_blank" rel="noreferrer">Kabar: расписание ИГА 2025</a>
+        <a href="https://sputnik.kg/20250512/mektep-bilim-okuuchu-ekzamen-1093921258.html" target="_blank" rel="noreferrer">Sputnik Кыргызстан: даты экзаменов</a>
+        <a href="https://78.edubish.kg/" target="_blank" rel="noreferrer">№78 мектеп-гимназиясы</a>
+        <a href="https://www.biblioteka.kg/book/1595" target="_blank" rel="noreferrer">Biblioteka.kg: история Кыргызстана 9</a>
+      </div>
+    </section>
+
+    <p class="footer">Подготовка к устному экзамену - это не заучивание чужого ответа, а умение спокойно объяснить тему. Используй эту страницу как тренажер, а даты и официальные правила текущего года уточняй у школы.</p>
+  </main>
+
+  <div class="modal-backdrop" id="ticketModal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <span class="chip" id="modalBadge">Билет</span>
+          <h3 id="modalTitle">Билет</h3>
+        </div>
+        <button class="modal-close" type="button" id="modalClose" aria-label="Закрыть окно">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </section>
+  </div>
+
+  <script>
+    const tickets = [
+      ["Ранние упоминания кыргызов и исторические территории", "Установление советской власти в Кыргызстане", ["этноним", "Тенир-Тоо", "1917-1918", "местные Советы"]],
+      ["Саки и усуни как ранние общества региона", "Провозглашение независимости Кыргызской Республики", ["кочевники", "Фергана и Жетысу", "1991", "суверенитет"]],
+      ["Государство Давань и торговые связи", "Первые дипломатические контакты кыргызов с Россией", ["Фергана", "шелковый путь", "Атаке бий", "посольство"]],
+      ["Памятники каменного и бронзового веков", "Подвиги кыргызстанцев в годы Великой Отечественной войны", ["археология", "труд и фронт", "героизм", "память"]],
+      ["Барсбек и борьба кыргызов за влияние в Центральной Азии", "Промышленность Кыргызстана до Великой Отечественной войны", ["каган", "Енисей", "индустриализация", "предприятия"]],
+      ["Кыргызское великодержавие и Алп Сол", "Коллективизация и переход к оседлости", ["государственность", "кочевники", "колхозы", "социальные последствия"]],
+      ["Караханиды, каракитаи и найманы", "Государственные символы и Конституция суверенного Кыргызстана", ["ислам", "города", "флаг", "основной закон"]],
+      ["Енисейские кыргызы: строй, хозяйство, культура", "Кыргызская автономия и Кыргызская ССР", ["руны", "скотоводство", "1926", "1936"]],
+      ["Кыргызстан в XIII-XIV веках и государство Хайду", "Восстановление хозяйства после войны и Исхак Раззаков", ["монгольская эпоха", "политическая карта", "послевоенное развитие", "Раззаков"]],
+      ["Присоединение Северного Кыргызстана к России", "Образование и наука в советский период", ["Шабдан", "Байтик", "школы", "наука"]],
+      ["Сопротивление политике Кокандского ханства", "Культура советского Кыргызстана", ["Тайлак", "Кубат", "Айтиев", "Чуйков"]],
+      ["Хунны и древнетюркская преемственность", "Репрессии и память Ата-Бейита", ["кочевые союзы", "тоталитаризм", "интеллигенция", "память"]],
+      ["Формирование кыргызского народа в XVI веке", "Кара-Кыргызская автономная область", ["Мухаммед Кыргыз", "этногенез", "1924", "национальная государственность"]],
+      ["Восстания 1873-1876 годов и Исхак Асан уулу", "После падения царизма и политика Временного правительства", ["Коканд", "сопротивление", "1917", "политический кризис"]],
+      ["Тюркские каганаты и их наследники", "Алайские кыргызы и Курманджан датка", ["каганат", "наследие", "Алай", "дипломатия"]],
+      ["Андижанское восстание и его участники", "Земельно-водные реформы", ["Мадали эшен", "Зияддин Максым", "реформа", "земля"]],
+      ["Кашгари и Баласагуни как культурное наследие", "Национально-освободительное движение 1916 года", ["словарь", "Кутадгу билиг", "Уркун", "причины"]],
+      ["Первые историки и просветители Кыргызстана", "Внешняя политика суверенной Кыргызской Республики", ["Сыдык уулу", "Солтоноев", "международные связи", "дипломатия"]],
+      ["Междоусобные войны и Ормон хан", "Образование, наука и культура независимого Кыргызстана", ["Боромбай", "Ормон", "реформы", "культура"]],
+      ["Моголистан и политическая карта средневековья", "Экономика Кыргызстана в годы войны и помощь фронту", ["постмонгольская эпоха", "регион", "тыл", "эвакуация"]],
+      ["Освободительные движения Восточного Туркестана и Суранчи бий", "Кыргызстан в годы развитого социализма и Усубалиев", ["Джангир ходжа", "Суранчи", "1960-1980-е", "Усубалиев"]],
+      ["Кыргызские правители в истории Кокандского ханства", "Гражданская война в Кыргызстане", ["Нусуп", "Алымбек датка", "1918-1920", "особенности"]],
+      ["Средневековые историко-архитектурные памятники", "Кыргызстан на новом этапе демократического развития", ["мавзолеи", "города", "реформы", "общество"]],
+      ["Кокандское ханство и роль кыргызских лидеров", "Политические изменения в суверенной Кыргызской Республике", ["Нүзүп бий", "Алымбек датка", "власть", "современность"]],
+      ["Караханидское государство и средневековое наследие", "Этапы кыргызской государственности", ["942-1212", "культура", "преемственность", "государство"]]
+    ];
+
+    const ticketDetails = [
+      {
+        full: [
+          "Первый вопрос раскрывает происхождение и ранние исторические пространства кыргызов. В ответе начни с того, что этноним \"кыргыз\" встречается в древних письменных источниках, а историческая память связывает кыргызов с несколькими пространствами: Енисейским регионом, Тенир-Тоо и Центральной Азией. Важно показать, что родина народа в истории не всегда сводится к одной точке на карте: миграции, союзы племен, войны и торговые пути меняли территорию расселения.",
+          "Второй вопрос относится к переломному времени 1917-1918 годов. После падения царской власти в регионе возникла борьба разных политических сил. Советская власть утверждалась через Советы, новые органы управления, гражданскую войну и изменение старых порядков. В ответе назови причины: кризис империи, социальное неравенство, земельный вопрос, влияние революций 1917 года. Итогом стало включение Кыргызстана в советскую политическую систему."
+        ],
+        short: "Кыргызов нужно показывать как народ с древними письменными упоминаниями и несколькими историческими территориями. Советская власть в Кыргызстане установилась после революций 1917 года в условиях политического кризиса, гражданской борьбы и перестройки управления.",
+        important: ["Этноним и территория - начало ответа.", "Не путай Тенир-Тоо и Енисей: оба пространства важны в исторической памяти.", "1917-1918 годы связывай с революцией и Советами.", "Вывод: начался советский этап истории Кыргызстана."]
+      },
+      {
+        full: [
+          "Саки и усуни показывают ранний этап истории кочевых и полукочевых обществ Центральной Азии. Саки были известны как воинственные степные кочевники, связанные со скотоводством, конницей, курганами и богатой материальной культурой. Усуни занимали важное место в Жетысу и соседних регионах, поддерживали связи с Китаем и другими государствами. В ответе подчеркни, что эти общества имели свою власть, военную организацию и хозяйственный уклад.",
+          "Провозглашение независимости Кыргызской Республики связано с распадом СССР и датой 31 августа 1991 года. Суверенитет означает самостоятельность государства во внутренней и внешней политике. После независимости Кыргызстан начал создавать собственные государственные институты, символы, правовую систему, международные связи и экономическую политику. Важно завершить ответ значением: независимость открыла новый этап национальной государственности."
+        ],
+        short: "Саки и усуни - ранние общества региона с кочевым хозяйством, военной организацией и внешними связями. Независимость Кыргызстана провозглашена 31 августа 1991 года и означала переход к самостоятельному государственному развитию.",
+        important: ["Саки - кочевники и курганы.", "Усуни - Жетысу, связи с соседями.", "31 августа 1991 года.", "Суверенитет - самостоятельность государства."]
+      },
+      {
+        full: [
+          "Давань обычно связывают с Ферганской долиной, земледелием, городами, ремеслом, торговлей и знаменитыми конями, которые упоминались в китайских источниках. Этот вопрос удобно раскрывать через связь оседлой культуры и международной торговли. Покажи, что территория Кыргызстана и соседних регионов была включена в широкие контакты Востока и Запада, а Великий шелковый путь был не только дорогой товаров, но и дорогой идей.",
+          "Первые дипломатические контакты кыргызских представителей с Россией связывают с Атаке бием и посольством. В ответе объясни, почему местные правители искали внешние связи: безопасность, торговля, баланс между соседними силами, отношения с Кокандом и другими политическими центрами. Это не было одномоментным присоединением, а частью долгого процесса дипломатии, переговоров и поиска союзников."
+        ],
+        short: "Давань - пример древней оседлой культуры Ферганы с торговыми связями. Первые посольства кыргызов в Россию показывают дипломатический поиск безопасности, торговли и политического баланса.",
+        important: ["Давань - Фергана, города, торговля.", "Шелковый путь связывал регионы.", "Атаке бий - дипломатический контекст.", "Не называй посольство присоединением."]
+      },
+      {
+        full: [
+          "Памятники каменного и бронзового веков доказывают древность заселения территории Кыргызстана. В ответе назови, что археологи изучают стоянки, орудия труда, жилища, погребения, наскальные рисунки и предметы быта. Эти находки помогают понять, как менялись занятия людей: охота, собирательство, раннее скотоводство, земледелие и обработка металлов. Хороший ответ объясняет значение источников, а не просто перечисляет находки.",
+          "Подвиги кыргызстанцев во время Великой Отечественной войны нужно раскрывать через фронт и тыл. На фронте уроженцы Кыргызстана участвовали в крупных сражениях, проявляли героизм и получали высокие награды. В тылу республика принимала эвакуированных, помогала промышленности, сельскому хозяйству и фронту ресурсами. Итог: война стала общей трагедией и проверкой общества, а память о воинах и тружениках тыла остается частью исторической культуры."
+        ],
+        short: "Древние памятники показывают раннюю жизнь людей на территории Кыргызстана. В годы Великой Отечественной войны Кыргызстан внес вклад и на фронте, и в тылу: людьми, трудом, эвакуацией и помощью фронту.",
+        important: ["Археология - главный источник древнейшей истории.", "Назови занятия людей по эпохам.", "Война: фронт плюс тыл.", "Выводи тему на память и вклад республики."]
+      },
+      {
+        full: [
+          "Барсбек каган связан с борьбой кыргызов за самостоятельность и влияние в Центральной Азии в VII-VIII веках. В ответе покажи политическую обстановку тюркской эпохи: каганаты, союзы, военные конфликты и дипломатия. Барсбек важен не только как имя, а как символ стремления к независимой власти и укреплению кыргызской государственности.",
+          "Промышленность Кыргызстана до Великой Отечественной войны развивалась в советской системе индустриализации. Строились предприятия, менялась структура хозяйства, росли города и рабочие кадры. При этом модернизация проходила быстро и напряженно, часто вместе с жестким государственным управлением. В ответе важно связать промышленность с общими процессами: плановая экономика, пятилетки, транспорт, энергетика и подготовка тыла к будущей войне."
+        ],
+        short: "Барсбек показывает борьбу кыргызов за самостоятельность в тюркскую эпоху. Довоенная промышленность Кыргызстана развивалась через индустриализацию, предприятия, кадры и плановую экономику.",
+        important: ["Барсбек - VII-VIII века.", "Главная идея - самостоятельность и власть.", "Индустриализация - советский контекст.", "Пятилетки, предприятия, рабочие кадры."]
+      },
+      {
+        full: [
+          "Кыргызское великодержавие связывают с усилением енисейских кыргызов и их политическим влиянием. В ответе надо показать признаки государственности: власть, войско, территория, отношения с соседями, хозяйственная база и культура. Алп Сол упоминается как значимая фигура эпохи. Смысл темы - показать, что у кыргызов были собственные политические традиции задолго до нового времени.",
+          "Коллективизация и оседание кочевников были частью советской аграрной политики. Государство стремилось объединить хозяйства в колхозы, контролировать производство и изменить образ жизни кочевого населения. Последствия были сложными: менялась социальная структура, традиционное хозяйство, быт и отношения с землей. В ответе обязательно покажи и цели власти, и последствия для людей."
+        ],
+        short: "Кыргызское великодержавие раскрывает раннюю политическую силу енисейских кыргызов. Коллективизация изменила аграрную жизнь, объединила хозяйства в колхозы и затронула кочевой уклад.",
+        important: ["Государственность: власть, территория, войско.", "Алп Сол - личность эпохи.", "Коллективизация - колхозы и контроль.", "Оседание меняло быт и хозяйство."]
+      },
+      {
+        full: [
+          "Караханиды, каракитаи и найманы относятся к средневековой истории Центральной Азии. Караханидское государство особенно важно из-за городов, торговли, исламизации и письменной культуры. Каракитаи и найманы показывают сложность политической карты региона, где разные силы сменяли друг друга и влияли на жизнь населения. Отвечай через время, территорию, власть, хозяйство и культуру.",
+          "Государственные символы и Конституция суверенной Кыргызской Республики раскрывают современную государственность. Символы выражают независимость и идентичность, а Конституция задает основы правового порядка, власти, прав и обязанностей граждан. В ответе важно не просто назвать флаг, герб и гимн, а объяснить, почему символы и основной закон нужны государству."
+        ],
+        short: "Средневековый блок показывает смену государств, торговлю и культуру региона. Символы и Конституция современного Кыргызстана выражают суверенитет, правовой порядок и гражданскую идентичность.",
+        important: ["Караханиды - города, ислам, культура.", "Каракитаи и найманы - политическая карта.", "Конституция - основной закон.", "Символы выражают независимость."]
+      },
+      {
+        full: [
+          "Енисейские кыргызы имели развитую общественную организацию, хозяйство и культуру. В ответе назови скотоводство, ремесло, военную организацию, социальную структуру и письменные памятники. Важно показать, что енисейский период не является второстепенным: он помогает объяснить раннюю политическую и культурную историю кыргызов.",
+          "Кыргызская автономия и создание Кыргызской ССР раскрывают советское национально-государственное строительство. Важные точки: Кара-Кыргызская автономная область, Кыргызская автономная республика 1926 года и Кыргызская ССР 1936 года. Личности Жусупа Абдрахманова, Абдыкадыра Орозбекова, Абдыкерима Сыдыкова и других деятелей показывают вклад местной элиты в оформление государственности."
+        ],
+        short: "Енисейские кыргызы важны для ранней культуры и государственности. В советский период статус Кыргызстана менялся от автономной области к автономной республике и Кыргызской ССР.",
+        important: ["Енисей: хозяйство, власть, культура.", "1926 - Кыргызская АССР.", "1936 - Кыргызская ССР.", "Назови деятелей национального строительства."]
+      },
+      {
+        full: [
+          "Кыргызстан в XIII-XIV веках нужно объяснять через последствия монгольских завоеваний и новую политическую карту Центральной Азии. Государство Хайду и постмонгольская эпоха показывают, как менялась власть, территории и отношения между кочевыми и оседлыми районами. В ответе не перегружайся деталями войн: лучше объясни общий процесс и его влияние на регион.",
+          "Восстановление народного хозяйства после Великой Отечественной войны связано с трудом людей, перестройкой промышленности, сельского хозяйства, образования и социальной сферы. Исхак Раззаков важен как руководитель, с именем которого связывают развитие послевоенного Кыргызстана, внимание к кадрам, образованию и экономике. Ответ заверши тем, что послевоенный период стал временем восстановления и модернизации."
+        ],
+        short: "XIII-XIV века связаны с постмонгольскими изменениями и государством Хайду. Послевоенное развитие Кыргызстана включало восстановление хозяйства, рост образования и роль Исхака Раззакова.",
+        important: ["Монгольская эпоха изменила карту региона.", "Хайду - политический контекст XIII-XIV веков.", "После войны - восстановление.", "Раззаков - образование, кадры, развитие."]
+      },
+      {
+        full: [
+          "Присоединение Северного Кыргызстана к России было длительным процессом, связанным с Кокандским ханством, интересами Российской империи, безопасностью, торговлей и действиями местных лидеров. Шабдан батыр и Байтик батыр помогают раскрыть тему через конкретных исторических деятелей. Важно не говорить об этом как об одном простом событии: это был сложный политический переход.",
+          "Образование и наука в советское время развивались через создание школ, ликвидацию неграмотности, подготовку кадров, открытие вузов, научных учреждений и развитие национальной интеллигенции. В ответе можно показать противоречие: советская система дала мощный рост образования, но одновременно была идеологически контролируемой."
+        ],
+        short: "Присоединение Северного Кыргызстана к России было сложным процессом дипломатии, давления и местной политики. Советское время резко расширило школы, грамотность, вузы и научные учреждения.",
+        important: ["Не своди присоединение к одной дате.", "Шабдан и Байтик - личности ответа.", "Советское образование - грамотность и кадры.", "Покажи и достижения, и идеологический контроль."]
+      },
+      {
+        full: [
+          "Борьба кыргызов против политики Кокандского ханства раскрывает социальное напряжение, налоги, власть местных правителей и стремление к самостоятельности. Ажы бий, Тайлак батыр и Кубат бий помогают показать сопротивление через действия конкретных лидеров. В ответе нужно объяснить причины борьбы и ее значение для национально-освободительной традиции.",
+          "Культура советского Кыргызстана развивалась в литературе, театре, кино, живописи, музыке и образовании. Гапар Айтиев, Бюбюсара Бейшеналиева, Ольга Мануйлова, Семен Чуйков и другие деятели показывают, как формировалась профессиональная культура. Хороший ответ связывает государственную поддержку культуры с идеологическими рамками советского времени."
+        ],
+        short: "Сопротивление Кокандскому ханству связано с налогами, властью и борьбой за самостоятельность. Советская культура дала профессиональные школы искусства, известных художников, актеров и культурные учреждения.",
+        important: ["Причины сопротивления: налоги, власть, зависимость.", "Тайлак, Кубат, Ажы бий.", "Советская культура - театр, живопись, музыка.", "Назови 2-3 деятеля и их сферу."]
+      },
+      {
+        full: [
+          "Хунны рассматриваются как один из древних кочевых союзов, повлиявших на историю тюркских народов и Центральной Азии. В ответе главное - не доказывать прямую простую линию происхождения, а показать культурно-историческую связь кочевых обществ, военную организацию, миграции и влияние степных империй на регион.",
+          "Усиление тоталитарного режима и массовые репрессии - одна из самых трагических тем советской истории. Раскрой причины: укрепление личной власти, борьба с реальными и мнимыми противниками, контроль над обществом. Последствия - уничтожение части интеллигенции, страх, разрушение судеб. Ата-Бейит стал местом памяти о жертвах репрессий и символом исторической ответственности."
+        ],
+        short: "Хунны показывают роль древних кочевых союзов в истории региона. Репрессии раскрывают насилие тоталитарного режима, потери интеллигенции и значение Ата-Бейита как места памяти.",
+        important: ["Хунны - кочевая имперская традиция.", "Не упрощай происхождение народов.", "Репрессии - тоталитарный контроль.", "Ата-Бейит - память о жертвах."]
+      },
+      {
+        full: [
+          "Формирование кыргызского народа в XVI веке связано с этническими процессами, объединением родоплеменных групп, историческими территориями и политическими лидерами. Мухаммед Кыргыз часто упоминается как важная фигура этого процесса. В ответе покажи, что народ формируется длительно: через язык, культуру, хозяйство, общую память и политические связи.",
+          "Образование Кара-Кыргызской автономной области в 1924 году было важным шагом советского национально-государственного строительства. Оно связано с национально-территориальным размежеванием в Средней Азии. Значение темы - появление административной основы будущей кыргызской государственности в советской системе."
+        ],
+        short: "Формирование кыргызского народа было длительным процессом XVI века и связано с Мухаммедом Кыргызом. Кара-Кыргызская автономная область 1924 года стала важным этапом будущей государственности.",
+        important: ["Этногенез - долгий процесс.", "Мухаммед Кыргыз - ключевая личность.", "1924 - Кара-Кыргызская автономная область.", "Связывай с национальным размежеванием."]
+      },
+      {
+        full: [
+          "Народное восстание 1873-1876 годов и Исхак Асан уулу нужно раскрывать как сопротивление политике Кокандского ханства и борьбу против тяжелого положения населения. В ответе назови причины: налоги, произвол, зависимость, стремление к самостоятельности. Важно показать, что восстания были частью более широкого недовольства в регионе.",
+          "После падения царского самодержавия в 1917 году в Кыргызстане, как и во всей бывшей империи, возникла неопределенность. Временное правительство пыталось сохранить управление, но не решило ключевые вопросы земли, войны и власти. Это усилило политическую борьбу и подготовило почву для утверждения советской власти."
+        ],
+        short: "Восстания 1873-1876 годов связаны с сопротивлением Коканду и социальной напряженностью. После падения царизма Временное правительство не решило главные проблемы, что усилило борьбу за власть.",
+        important: ["Причины восстания: налоги, произвол, зависимость.", "Исхак Асан уулу - личность темы.", "1917 - падение царизма.", "Временное правительство не решило земельный вопрос."]
+      },
+      {
+        full: [
+          "Эпоха тюркских каганатов важна для понимания политической карты Центральной Азии, военной организации, письменности и культурного наследия. Тюркские государства связывали огромные пространства, контролировали торговые пути и влияли на народы региона. В ответе подчеркни значение тюркской письменности, титулов власти и кочевой государственности.",
+          "Алайские кыргызы в конце XIX века и Курманджан датка раскрывают тему дипломатии, лидерства и выживания общества в сложной политической ситуации. Курманджан датка важна как правительница и дипломат, умевшая вести переговоры и сохранять влияние в условиях давления крупных сил. Ответ должен показать ее роль не только как символа, но и как политического деятеля."
+        ],
+        short: "Тюркские каганаты оставили политическое и культурное наследие Центральной Азии. Курманджан датка и алайские кыргызы показывают дипломатию, лидерство и сложный выбор конца XIX века.",
+        important: ["Тюркская эпоха - каганаты, письменность, пути.", "Кочевая государственность.", "Курманджан датка - лидер и дипломат.", "Алай - важный регион ответа."]
+      },
+      {
+        full: [
+          "Андижанское восстание связано с социальной, религиозной и политической напряженностью в Ферганской долине в конце XIX века. Мадали эшен и Зияддин Максым уулу помогают раскрыть тему через участников и идеи движения. В ответе важно объяснить причины недовольства и последствия, включая репрессии и усиление контроля.",
+          "Земельно-водные реформы в Кыргызстане были направлены на перераспределение земель и водных ресурсов, изменение положения местного населения и укрепление советской власти в деревне. У реформ были социальные цели, но они также сопровождались конфликтами и административным давлением. В ответе покажи, как земля и вода были ключевыми ресурсами аграрного общества."
+        ],
+        short: "Андижанское восстание отражало напряженность конца XIX века в Фергане. Земельно-водные реформы меняли доступ к земле и воде, укрепляя советскую власть и влияя на сельское население.",
+        important: ["Андижан - конец XIX века, Фергана.", "Мадали эшен, Зияддин Максым.", "Земля и вода - главные ресурсы.", "Реформы имели цели и конфликты."]
+      },
+      {
+        full: [
+          "Махмуд Кашгари и Жусуп Баласагуни показывают высокий уровень средневековой письменной культуры тюркского мира. Кашгари известен трудом о тюркских языках, Баласагуни - поэмой о государстве, мудрости и справедливом правлении. В ответе объясни, что культурное наследие является историческим источником, потому что передает язык, ценности, политические идеи и картину мира эпохи.",
+          "Национально-освободительное движение 1916 года раскрывай через причины: земельный вопрос, колониальная политика, налоги, социальное напряжение и мобилизационный указ на тыловые работы. Затем назови ход восстания, подавление, бегство части населения и тяжелые последствия. Заверши значением: 1916 год стал важной частью исторической памяти кыргызского народа."
+        ],
+        short: "Кашгари и Баласагуни - символы средневековой письменной культуры. 1916 год связан с колониальной политикой, мобилизационным указом, восстанием, трагическими последствиями и исторической памятью.",
+        important: ["Кашгари - тюркские языки.", "Баласагуни - государство и мудрость.", "1916: причины, ход, последствия.", "Уркун и память - сильный вывод."]
+      },
+      {
+        full: [
+          "Первые историки и просветители Кыргызстана важны потому, что они сохраняли память, собирали сведения, развивали образование и формировали национальное самосознание. Осмонаалы Сыдык уулу, Белек Солтоноев, Ишеналы Арабаев и другие деятели работали в трудное время перехода от традиционного общества к новой школе, печати и письменной культуре.",
+          "Международные связи и внешняя политика суверенной Кыргызской Республики раскрывают место страны в современном мире. После независимости Кыргызстан выстраивал отношения с соседями, вступал в международные организации, развивал дипломатические, экономические и культурные связи. В ответе важно объяснить, что внешняя политика нужна для безопасности, торговли, сотрудничества и признания государства."
+        ],
+        short: "Просветители и первые историки сохраняли память и развивали образование. Внешняя политика суверенного Кыргызстана направлена на безопасность, сотрудничество, торговлю и международное признание.",
+        important: ["Сыдык уулу, Солтоноев, Арабаев.", "Просвещение - школа, письменность, память.", "Внешняя политика - соседи и организации.", "Цели: безопасность, торговля, сотрудничество."]
+      },
+      {
+        full: [
+          "Феодальные междоусобные войны в северном Кыргызстане показывают сложность политической жизни XIX века. Боромбай бий и Ормон хан помогают раскрыть борьбу за влияние, попытки объединения и отношения между родоплеменными группами. В ответе важно объяснить, почему раздробленность ослабляла общество и почему попытки объединения имели большое значение.",
+          "Образование, наука и культура в суверенном Кыргызстане развивались в новых условиях независимости. Появлялись новые учебные программы, международные связи, частные и государственные образовательные инициативы, менялась культурная политика. В ответе можно назвать трудности переходного периода, но завершить тем, что культура и образование стали частью укрепления национальной идентичности."
+        ],
+        short: "Междоусобицы XIX века показывают раздробленность и попытки объединения вокруг лидеров. В независимом Кыргызстане образование, наука и культура развиваются как часть национальной идентичности и модернизации.",
+        important: ["Ормон хан - попытка объединения.", "Раздробленность ослабляла общество.", "Суверенный период - новые программы и связи.", "Культура укрепляет идентичность."]
+      },
+      {
+        full: [
+          "Моголистан был важным государством средневековой Центральной Азии, связанным с постмонгольской политической картой. В ответе покажи территорию, власть, отношения с соседями и влияние на народы региона. Главное - объяснить, что после монгольской эпохи возникали новые государства, союзы и конфликты, которые меняли жизнь Тенир-Тоо и соседних земель.",
+          "Экономика Кыргызстана в годы Великой Отечественной войны была подчинена нуждам фронта. Республика принимала эвакуированные предприятия и людей, увеличивала производство, отправляла продовольствие, сырье и средства. Женщины, подростки и пожилые люди работали в тылу. Итог: победа была достигнута не только на фронте, но и огромным трудом тыла."
+        ],
+        short: "Моголистан раскрывает постмонгольскую политическую карту региона. В годы войны экономика Кыргызстана работала для фронта: эвакуация, производство, сельское хозяйство и помощь армии.",
+        important: ["Моголистан - средневековая политика.", "Постмонгольская карта региона.", "Война: экономика для фронта.", "Эвакуация и труд тыла."]
+      },
+      {
+        full: [
+          "Освободительное движение Джангир ходжи и участие Суранчи бия связаны с событиями Восточного Туркестана и борьбой против внешнего господства. В ответе важно показать региональные связи кыргызов с соседними территориями, а также причины участия местных лидеров в движениях за самостоятельность и защиту интересов населения.",
+          "Кыргызстан в годы развитого социализма обычно относится к 1960-1980-м годам. Турдакун Усубалиев был значимой фигурой советского Кыргызстана. Период характеризуется строительством, ростом городов, промышленности, образования и социальной инфраструктуры, но также признаками застоя, бюрократии и ограниченной политической свободы."
+        ],
+        short: "Движение Джангир ходжи и Суранчи бий показывают региональные освободительные процессы. Развитой социализм в Кыргызстане связан с Усубалиевым, строительством, ростом инфраструктуры и противоречиями позднего СССР.",
+        important: ["Восточный Туркестан - региональный контекст.", "Суранчи бий - личность движения.", "1960-1980-е - развитой социализм.", "Усубалиев, строительство, застой."]
+      },
+      {
+        full: [
+          "Роль кыргызских правителей в истории Кокандского ханства раскрывает участие кыргызской знати в политике региона. Нусуп бий, Алымбек датка, Кубат бий, Акбото бий и другие деятели показывают, что кыргызы были не только объектом политики ханства, но и активными участниками власти, дипломатии, сопротивления и управления.",
+          "Гражданская война в Кыргызстане в 1918-1920-е годы имела свои особенности: борьба за власть происходила на фоне социальной напряженности, национальных вопросов, влияния басмачества, трудной экономики и слабости старых институтов. В ответе объясни, что гражданская война была частью общероссийского конфликта, но в регионе имела местные причины и формы."
+        ],
+        short: "Кыргызские лидеры играли активную роль в политике Кокандского ханства. Гражданская война в Кыргызстане была частью общего конфликта после революции, но имела местные социальные и политические особенности.",
+        important: ["Кыргызы в Коканде - активные участники.", "Нусуп, Алымбек, Кубат, Акбото.", "1918-1920-е - гражданская война.", "Учитывай местные особенности региона."]
+      },
+      {
+        full: [
+          "Средневековые историко-архитектурные памятники Кыргызстана показывают развитие городов, ремесла, религии, торговли и художественной культуры. В ответе можно упоминать башни, мавзолеи, городища и памятники, связывая их с Великим шелковым путем и культурным обменом. Главное - объяснить, что памятник является историческим источником.",
+          "Кыргызстан на новом этапе демократического развития - это тема современных реформ, политического участия, институтов власти, гражданского общества и правовой культуры. В ответе избегай резких оценок: назови факты, причины изменений, трудности и значение демократических процедур для развития государства."
+        ],
+        short: "Архитектурные памятники средневековья являются источниками о культуре, городах и торговле. Новый демократический этап Кыргызстана связан с реформами, гражданским участием, институтами и правовой культурой.",
+        important: ["Памятник - исторический источник.", "Шелковый путь и города.", "Демократия - институты и участие.", "Современность отвечай через факты, не слухи."]
+      },
+      {
+        full: [
+          "Кокандское ханство занимало важное место в истории юга Кыргызстана и всей Ферганской долины. Нүзүп бий, Алымбек датка и другие кыргызские лидеры влияли на политику ханства, участвовали в управлении, дипломатии и борьбе за власть. В ответе важно показать не только зависимость, но и активную роль кыргызских правителей.",
+          "Политические изменения в суверенной Кыргызской Республике нужно раскрывать через становление институтов после 1991 года, конституционные процессы, смену власти, развитие партий, гражданского общества и общественных движений. Самое важное - отвечать нейтрально: факт, причина, последствие, значение для государственности."
+        ],
+        short: "Кыргызские правители были заметными участниками истории Кокандского ханства. Политические изменения независимого Кыргызстана раскрывают развитие институтов, Конституции, власти и гражданского общества.",
+        important: ["Коканд - общий региональный контекст.", "Нүзүп бий и Алымбек датка.", "Суверенный период - институты и Конституция.", "Держись точных фактов."]
+      },
+      {
+        full: [
+          "Караханидское государство существовало примерно в X-XIII веках и стало одним из ключевых средневековых государств региона. Его значение раскрывается через исламизацию, развитие городов, ремесла, торговли, письменной культуры и наследия Баласагуна. В ответе покажи, что Караханиды важны не только политически, но и культурно.",
+          "Этапы кыргызской государственности - итоговая тема, где нужно выстроить длинную историческую линию. Упомяни ранние формы власти, Енисейских кыргызов, средневековые государства, политические процессы XIX века, советские автономии и суверенную Кыргызскую Республику. Смысл ответа - показать преемственность стремления к собственной государственности."
+        ],
+        short: "Караханиды важны как средневековое государство с городами, исламом и письменной культурой. Этапы кыргызской государственности связывают древние, средневековые, советские и современные формы политического развития.",
+        important: ["Караханиды: X-XIII века.", "Исламизация, города, культура.", "Государственность - длинная линия.", "Финальный вывод: преемственность и суверенитет."]
+      }
+    ];
+
+    const ticketGrid = document.querySelector("#ticketGrid");
+    const chosenTicket = document.querySelector("#chosenTicket");
+    const ticketModal = document.querySelector("#ticketModal");
+    const modalBadge = document.querySelector("#modalBadge");
+    const modalTitle = document.querySelector("#modalTitle");
+    const modalBody = document.querySelector("#modalBody");
+    const modalClose = document.querySelector("#modalClose");
+    let activeTicketIndex = -1;
+
+    function renderTickets(activeIndex = -1) {
+      ticketGrid.innerHTML = tickets.map((ticket, index) => `
+        <article class="ticket-card" role="button" tabindex="0" data-ticket="${index}" style="--accent:${activeIndex === index ? "#c74343" : "#d89026"}">
+          <span class="chip">Билет ${index + 1}</span>
+          <h4>${activeIndex === index ? "Тренируй сейчас" : "Типовой блок"}</h4>
+          <ol>
+            <li>${ticket[0]}</li>
+            <li>${ticket[1]}</li>
+          </ol>
+          <ul class="answer-plan">
+            ${ticket[2].map(item => `<li>${item}</li>`).join("")}
+          </ul>
+          <span class="open-hint">Открыть полный разбор</span>
+        </article>
+      `).join("");
+    }
+
+    function openTicket(index) {
+      const ticket = tickets[index];
+      const details = ticketDetails[index];
+      if (!ticket || !details) return;
+
+      activeTicketIndex = index;
+      chosenTicket.textContent = `Билет ${index + 1}: открыт полный разбор`;
+      modalBadge.textContent = `Билет ${index + 1}`;
+      modalTitle.textContent = `${ticket[0]} + ${ticket[1]}`;
+      modalBody.innerHTML = `
+        <section class="modal-section">
+          <h4>Вопросы билета</h4>
+          <ol class="ticket-questions">
+            <li>${ticket[0]}</li>
+            <li>${ticket[1]}</li>
+          </ol>
+        </section>
+        <section class="modal-section">
+          <h4>Полный текст для обучения</h4>
+          ${details.full.map(paragraph => `<p>${paragraph}</p>`).join("")}
+        </section>
+        <section class="modal-section">
+          <h4>Короткий ответ</h4>
+          <p>${details.short}</p>
+        </section>
+        <section class="modal-section">
+          <h4>Самое важное</h4>
+          <ul class="key-list">
+            ${details.important.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </section>
+      `;
+
+      ticketModal.hidden = false;
+      document.body.classList.add("modal-open");
+      requestAnimationFrame(() => {
+        ticketModal.classList.add("open");
+        modalClose.focus({ preventScroll: true });
+      });
+    }
+
+    function closeTicket() {
+      ticketModal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+      const returnTarget = activeTicketIndex >= 0 ? document.querySelector(`[data-ticket="${activeTicketIndex}"]`) : null;
+      window.setTimeout(() => {
+        ticketModal.hidden = true;
+        if (returnTarget) returnTarget.focus({ preventScroll: true });
+      }, 220);
+    }
+
+    document.querySelector("#randomTicket").addEventListener("click", () => {
+      const index = Math.floor(Math.random() * tickets.length);
+      chosenTicket.textContent = `Билет ${index + 1}: проговори оба вопроса по плану`;
+      renderTickets(index);
+      document.querySelectorAll(".ticket-card")[index].scrollIntoView({ behavior: "smooth", block: "center" });
+      openTicket(index);
+    });
+
+    ticketGrid.addEventListener("click", event => {
+      const card = event.target.closest("[data-ticket]");
+      if (!card) return;
+      openTicket(Number(card.dataset.ticket));
+    });
+
+    ticketGrid.addEventListener("keydown", event => {
+      const card = event.target.closest("[data-ticket]");
+      if (!card) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openTicket(Number(card.dataset.ticket));
+      }
+    });
+
+    modalClose.addEventListener("click", closeTicket);
+
+    ticketModal.addEventListener("click", event => {
+      if (event.target === ticketModal) closeTicket();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !ticketModal.hidden) {
+        closeTicket();
+      }
+    });
+
+    document.querySelector("#quizForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const correct = [0, 1, 0];
+      let score = 0;
+      for (let index = 0; index < correct.length; index += 1) {
+        const picked = document.querySelector(`input[name="q${index}"]:checked`);
+        if (picked && Number(picked.value) === correct[index]) score += 1;
+      }
+      const text = score === correct.length
+        ? "Отлично. Теперь проговори один случайный билет вслух."
+        : "Нормально, но повтори структуру ответа и ключевые даты, затем попробуй еще раз.";
+      document.querySelector("#quizResult").innerHTML = `<div class="result"><strong>${score}/${correct.length}</strong><br>${text}</div>`;
+    });
+
+    renderTickets();
+  </script>
+</body>
+</html>

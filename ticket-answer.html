@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Билет KG">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <title>Полный ответ на билет - история Кыргызстана</title>
+  <script>
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem("kgStudyTheme") || "light";
+        document.documentElement.dataset.theme = savedTheme === "dark" ? "dark" : "light";
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --paper: #f7f7f2;
+      --white: #ffffff;
+      --ink: #172133;
+      --muted: #5f6978;
+      --line: rgba(23, 33, 51, 0.12);
+      --red: #c74343;
+      --blue: #2866d6;
+      --green: #0d947f;
+      --gold: #d89026;
+      --shadow: 0 22px 60px rgba(23, 33, 51, 0.14);
+      --radius: 8px;
+      color-scheme: light;
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    }
+
+    :root[data-theme="dark"] {
+      --paper: #09111d;
+      --white: #121b2a;
+      --ink: #eef4ff;
+      --muted: #a9b5c6;
+      --line: rgba(232, 239, 250, 0.16);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(247, 247, 242, 0.82), rgba(247, 247, 242, 0.98)),
+        url("assets/study-map.png") center top / cover no-repeat fixed,
+        var(--paper);
+      letter-spacing: 0;
+      overflow-x: hidden;
+      overflow-wrap: anywhere;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(23, 33, 51, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 33, 51, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.78), transparent 72%);
+    }
+
+    a { color: inherit; }
+    button { border: 0; cursor: pointer; font: inherit; touch-action: manipulation; }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: calc(20px + env(safe-area-inset-top)) 0 calc(52px + env(safe-area-inset-bottom));
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      min-height: 62px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      box-shadow: 0 14px 28px rgba(199, 67, 67, 0.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.05rem, 1rem + 0.7vw, 1.5rem);
+      line-height: 1.1;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .actions,
+    .hero-actions,
+    .ticket-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .button,
+    .primary,
+    .nav-link {
+      min-height: 42px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      text-decoration: none;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button,
+    .nav-link {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 16px 34px rgba(199, 67, 67, 0.22);
+    }
+
+    .button:hover,
+    .primary:hover,
+    .nav-link:hover,
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+    }
+
+    .nav-link[aria-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .lang-switch button {
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 850;
+    }
+
+    .lang-switch button.active {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(199, 67, 67, 0.18);
+    }
+
+    .theme-toggle {
+      width: 42px;
+      min-width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      display: inline-grid;
+      place-items: center;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(23, 33, 51, 0.08);
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      stroke-width: 2.2;
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      padding: clamp(22px, 4vw, 46px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78)),
+        linear-gradient(90deg, rgba(199, 67, 67, 0.12), rgba(13, 148, 127, 0.10));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--green), var(--blue));
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--red);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    .hero h2 {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(2rem, 1.34rem + 3vw, 4.15rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      margin: 14px 0 0;
+      max-width: 790px;
+      color: #354052;
+      line-height: 1.68;
+      font-size: clamp(1rem, 0.96rem + 0.28vw, 1.14rem);
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(216, 144, 38, 0.28);
+      background: rgba(255, 247, 232, 0.86);
+      color: #65410e;
+      line-height: 1.55;
+    }
+
+    .answer-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+      gap: 16px;
+      margin-top: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      box-shadow: 0 14px 42px rgba(23, 33, 51, 0.09);
+      padding: clamp(18px, 3vw, 28px);
+      animation: panelIn 360ms ease both;
+    }
+
+    .panel:nth-child(2) { animation-delay: 80ms; }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel h3 {
+      margin: 0 0 12px;
+      font-size: clamp(1.25rem, 1rem + 0.9vw, 1.9rem);
+      line-height: 1.12;
+    }
+
+    .panel h4 {
+      margin: 22px 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .question-list,
+    .key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #303c4d;
+      line-height: 1.68;
+    }
+
+    .question-list li + li,
+    .key-list li + li {
+      margin-top: 8px;
+    }
+
+    .short-answer {
+      padding: 15px;
+      border-radius: var(--radius);
+      background: rgba(240, 250, 247, 0.92);
+      border: 1px solid rgba(13, 148, 127, 0.22);
+      color: #204d44;
+      line-height: 1.65;
+    }
+
+    .answer-text p {
+      margin: 0;
+      color: #303c4d;
+      line-height: 1.82;
+      font-size: 1.02rem;
+    }
+
+    .answer-text p + p {
+      margin-top: 13px;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 14px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .mini-panel {
+      padding: 16px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+    }
+
+    .mini-panel h4 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .mini-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.94rem;
+    }
+
+    .source {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.88rem;
+    }
+
+    .source a {
+      font-weight: 800;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    :root[data-theme="dark"] body {
+      background:
+        linear-gradient(180deg, rgba(7, 13, 24, 0.88), rgba(7, 13, 24, 0.98)),
+        url("assets/study-map.png") center top / cover no-repeat fixed,
+        var(--paper);
+    }
+
+    :root[data-theme="dark"] body::before {
+      background-image:
+        linear-gradient(rgba(232, 239, 250, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 239, 250, 0.045) 1px, transparent 1px);
+    }
+
+    :root[data-theme="dark"] .button,
+    :root[data-theme="dark"] .nav-link,
+    :root[data-theme="dark"] .lang-switch,
+    :root[data-theme="dark"] .theme-toggle,
+    :root[data-theme="dark"] .mini-panel {
+      background: rgba(18, 27, 42, 0.78);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    :root[data-theme="dark"] .hero,
+    :root[data-theme="dark"] .panel {
+      background:
+        linear-gradient(120deg, rgba(18, 27, 42, 0.96), rgba(18, 27, 42, 0.82)),
+        linear-gradient(90deg, rgba(199, 67, 67, 0.18), rgba(13, 148, 127, 0.12));
+      border-color: rgba(232, 239, 250, 0.14);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    :root[data-theme="dark"] .hero-copy,
+    :root[data-theme="dark"] .question-list,
+    :root[data-theme="dark"] .key-list,
+    :root[data-theme="dark"] .answer-text p {
+      color: #d6deeb;
+    }
+
+    :root[data-theme="dark"] .short-answer {
+      background: rgba(13, 148, 127, 0.12);
+      color: #c9f8ed;
+      border-color: rgba(13, 148, 127, 0.32);
+    }
+
+    :root[data-theme="dark"] .status {
+      background: rgba(216, 144, 38, 0.13);
+      color: #ffe2ae;
+      border-color: rgba(216, 144, 38, 0.32);
+    }
+
+    @media (max-width: 820px) {
+      body { background-attachment: scroll; }
+      :root[data-theme="dark"] body { background-attachment: scroll; }
+      .shell { width: min(100% - 22px, 760px); padding-top: 10px; }
+      .topbar,
+      .answer-layout {
+        grid-template-columns: 1fr;
+      }
+      .actions,
+      .hero-actions,
+      .ticket-nav {
+        align-items: stretch;
+      }
+      .button,
+      .primary,
+      .nav-link,
+      .lang-switch {
+        width: 100%;
+      }
+      .lang-switch button { flex: 1; }
+      .theme-toggle { width: 42px; }
+      .side-panel { position: static; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 18px, 520px); }
+      .hero,
+      .panel { padding: 18px; }
+      .brand p { display: none; }
+      .hero h2 { font-size: clamp(1.85rem, 1.35rem + 7vw, 3rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">Б</div>
+        <div>
+          <h1 data-i18n="pageTitle">Полный ответ на билет</h1>
+          <p data-i18n="pageSubtitle">История Кыргызстана • 9 класс</p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="lang-switch" aria-label="Выбор языка">
+          <button type="button" data-lang="ru" class="active">RU</button>
+          <button type="button" data-lang="kg">KG</button>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить черную тему" title="Включить черную тему"></button>
+        <a class="button" href="history-exam.html#tickets" data-i18n="backTickets">← К билетам</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow" id="ticketBadge">Билет</p>
+        <h2 id="ticketTitle">Загрузка билета...</h2>
+        <p class="hero-copy" id="ticketLead">Подготавливаю полный ответ и краткую версию.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="primary" href="#fullAnswer" data-i18n="readFull">Читать полный ответ</a>
+        <a class="button" href="#shortAnswer" data-i18n="readShort">Короткий ответ</a>
+      </div>
+    </section>
+
+    <div id="statusMount" class="status" hidden></div>
+
+    <section class="answer-layout">
+      <article class="panel">
+        <h3 data-i18n="officialQuestions">Официальные вопросы билета</h3>
+        <ol class="question-list" id="questionList"></ol>
+        <p class="source" id="languageNote"></p>
+
+        <h4 id="shortAnswer" data-i18n="shortTitle">Короткий ответ</h4>
+        <div class="short-answer" id="shortText"></div>
+
+        <h4 id="fullAnswer" data-i18n="fullTitle">Полный ответ</h4>
+        <div class="answer-text" id="fullText"></div>
+      </article>
+
+      <aside class="side-panel">
+        <div class="panel">
+          <h3 data-i18n="mostImportant">Самое важное</h3>
+          <ul class="key-list" id="importantList"></ul>
+        </div>
+        <div class="mini-panel">
+          <h4 data-i18n="howUse">Как отвечать</h4>
+          <p id="examTip"></p>
+        </div>
+        <div class="mini-panel">
+          <h4 data-i18n="ticketNavTitle">Навигация</h4>
+          <div class="ticket-nav">
+            <a class="nav-link" id="prevTicket" href="#">←</a>
+            <a class="nav-link" id="nextTicket" href="#">→</a>
+          </div>
+        </div>
+        <p class="source" id="sourceText"></p>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const themeStorageKey = "kgStudyTheme";
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    let currentLang = params.get("lang") === "kg" ? "kg" : (localStorage.getItem("historyExamLang") === "kg" ? "kg" : "ru");
+    let ticketIndex = Math.max(0, (Number(params.get("ticket")) || 1) - 1);
+    let snapshotNumber = null;
+    let ticketsData = [];
+    let detailsRu = [];
+    let detailsKg = [];
+    let loadedFromSnapshot = false;
+
+    const uiText = {
+      ru: {
+        pageTitle: "Полный ответ на билет",
+        pageSubtitle: "История Кыргызстана • 9 класс",
+        backTickets: "← К билетам",
+        ticket: "Билет",
+        loadingTitle: "Загрузка билета...",
+        loadingLead: "Подготавливаю полный ответ и краткую версию.",
+        readFull: "Читать полный ответ",
+        readShort: "Короткий ответ",
+        officialQuestions: "Официальные вопросы билета",
+        shortTitle: "Короткий ответ",
+        fullTitle: "Полный ответ",
+        mostImportant: "Самое важное",
+        howUse: "Как отвечать",
+        ticketNavTitle: "Навигация",
+        prev: "← Предыдущий",
+        next: "Следующий →",
+        noPrev: "Предыдущий недоступен",
+        noNext: "Следующий недоступен",
+        source: 'Вопросы сверяются с опубликованным PDF 2025: <a href="https://48.edubish.kg/wp-content/uploads/sites/79/2025/05/ekzamenatsionnye-voprosy-9-kl.pdf" target="_blank" rel="noreferrer">экзаменационные вопросы 9 класса</a>.',
+        langNote: "Формулировки вопросов сохранены по опубликованному PDF. Ответ можно читать и тренировать на выбранном языке.",
+        snapshotNotice: "Страница открыта из локального снимка билета. На GitHub Pages будут доступны переходы по всем билетам.",
+        error: "Не получилось загрузить данные билета. Открой эту страницу через кнопку «Полный ответ» на странице билетов или размести файлы на GitHub Pages.",
+        tip: "На экзамене не читай текст дословно: сначала назови тему и период, затем дай причины, факты, личности, итог и значение. Заверши ответ коротким выводом.",
+        extra1: "Для устного ответа начни с первого вопроса: назови период, главных участников, причины и последствия. Затем перейди ко второму вопросу и покажи связь с развитием Кыргызстана.",
+        extra2: "В конце сделай вывод в 2-3 предложениях: почему эти события важны для истории страны, какие изменения они принесли и какой термин или дата помогают запомнить тему."
+      },
+      kg: {
+        pageTitle: "Билет боюнча толук жооп",
+        pageSubtitle: "Кыргызстан тарыхы • 9-класс",
+        backTickets: "← Билеттерге",
+        ticket: "Билет",
+        loadingTitle: "Билет жүктөлүүдө...",
+        loadingLead: "Толук жооп жана кыска жооп даярдалып жатат.",
+        readFull: "Толук жоопту окуу",
+        readShort: "Кыска жооп",
+        officialQuestions: "Билеттин расмий суроолору",
+        shortTitle: "Кыска жооп",
+        fullTitle: "Толук жооп",
+        mostImportant: "Эң маанилүүсү",
+        howUse: "Кантип жооп берүү керек",
+        ticketNavTitle: "Навигация",
+        prev: "← Мурунку",
+        next: "Кийинки →",
+        noPrev: "Мурунку билет жок",
+        noNext: "Кийинки билет жок",
+        source: 'Суроолор 2025-жылы жарыяланган PDF менен салыштырылат: <a href="https://48.edubish.kg/wp-content/uploads/sites/79/2025/05/ekzamenatsionnye-voprosy-9-kl.pdf" target="_blank" rel="noreferrer">9-класстын экзамен суроолору</a>.',
+        langNote: "Суроолор PDFтеги расмий формулировкада сакталды. Жоопту кыргызча окуп, оозеки айтып машыксаң болот.",
+        snapshotNotice: "Баракча локалдык сакталган билет аркылуу ачылды. GitHub Pagesте бардык билеттерге өтүү иштейт.",
+        error: "Билеттин маалыматтарын жүктөө мүмкүн болгон жок. Бул баракты билеттер барагындагы «Толук жооп» баскычы аркылуу ач же файлдарды GitHub Pagesке жайгаштыр.",
+        tip: "Экзаменде текстти жаттап окубай, теманы жана мезгилди ата. Андан кийин себеп, факт, инсан, натыйжа жана маанисин айт. Акырында кыска жыйынтык чыгар.",
+        extra1: "Оозеки жоопту биринчи суроодон башта: мезгилди, негизги катышуучуларды, себептерди жана натыйжаларды ата. Андан соң экинчи суроого өтүп, аны Кыргызстан тарыхындагы жалпы өнүгүү менен байланыштыр.",
+        extra2: "Жыйынтыкта 2-3 сүйлөм айт: бул окуялар эмне үчүн маанилүү, өлкөнүн тарыхына кандай өзгөрүү алып келди жана кайсы дата же термин теманы эстеп калууга жардам берет."
+      }
+    };
+
+    function t(key) {
+      return uiText[currentLang][key] || uiText.ru[key] || key;
+    }
+
+    function currentTheme() {
+      return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    }
+
+    function themeIcon(theme = currentTheme()) {
+      return theme === "dark"
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m17.1-7.1-1.4 1.4M6.3 17.7l-1.4 1.4m14.2 0-1.4-1.4M6.3 6.3 4.9 4.9"></path></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"></path></svg>';
+    }
+
+    function updateThemeButtons() {
+      document.querySelectorAll("[data-theme-toggle]").forEach(button => {
+        const theme = currentTheme();
+        const label = theme === "dark" ? "Включить белую тему" : "Включить черную тему";
+        button.setAttribute("aria-label", label);
+        button.setAttribute("title", label);
+        button.innerHTML = themeIcon(theme);
+      });
+    }
+
+    function applyTheme(theme = currentTheme()) {
+      const nextTheme = theme === "dark" ? "dark" : "light";
+      document.documentElement.dataset.theme = nextTheme;
+      if (themeMeta) themeMeta.setAttribute("content", nextTheme === "dark" ? "#09111d" : "#f7f7f2");
+      try {
+        localStorage.setItem(themeStorageKey, nextTheme);
+      } catch {
+        // The theme stays usable even when storage is blocked.
+      }
+      updateThemeButtons();
+    }
+
+    function extractArraySource(source, name) {
+      const start = source.indexOf(`const ${name} =`);
+      if (start < 0) throw new Error(`Array ${name} not found`);
+      const bracketStart = source.indexOf("[", start);
+      let depth = 0;
+      let quote = "";
+      let escaped = false;
+      for (let index = bracketStart; index < source.length; index += 1) {
+        const char = source[index];
+        if (quote) {
+          if (escaped) {
+            escaped = false;
+          } else if (char === "\\") {
+            escaped = true;
+          } else if (char === quote) {
+            quote = "";
+          }
+          continue;
+        }
+        if (char === '"' || char === "'" || char === "`") {
+          quote = char;
+          continue;
+        }
+        if (char === "[") depth += 1;
+        if (char === "]") {
+          depth -= 1;
+          if (depth === 0) return source.slice(bracketStart, index + 1);
+        }
+      }
+      throw new Error(`Array ${name} is not closed`);
+    }
+
+    function parseArray(source, name) {
+      const arraySource = extractArraySource(source, name);
+      return Function(`"use strict"; return (${arraySource});`)();
+    }
+
+    function loadSnapshot() {
+      try {
+        const snapshot = JSON.parse(localStorage.getItem("historyTicketAnswer") || "null");
+        if (!snapshot || !snapshot.ticket || !snapshot.details) return false;
+        if (snapshot.index !== ticketIndex) return false;
+        snapshotNumber = snapshot.index + 1;
+        ticketsData = [snapshot.ticket];
+        detailsRu = [snapshot.details];
+        detailsKg = [snapshot.details];
+        ticketIndex = 0;
+        loadedFromSnapshot = true;
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch("history-exam.html", { cache: "no-store" });
+        if (!response.ok) throw new Error("history-exam.html unavailable");
+        const html = await response.text();
+        ticketsData = parseArray(html, "tickets");
+        detailsRu = parseArray(html, "ticketDetails");
+        detailsKg = parseArray(html, "ticketDetailsKg");
+        detailsRu.length = ticketsData.length;
+        detailsKg.length = ticketsData.length;
+        ticketIndex = Math.max(0, Math.min(ticketIndex, ticketsData.length - 1));
+      } catch {
+        if (!loadSnapshot()) showStatus(t("error"));
+      }
+    }
+
+    function activeDetails() {
+      return currentLang === "kg" ? detailsKg : detailsRu;
+    }
+
+    function ticketNumber() {
+      return snapshotNumber || ticketIndex + 1;
+    }
+
+    function answerUrl(index) {
+      return `ticket-answer.html?ticket=${index + 1}&lang=${currentLang}`;
+    }
+
+    function showStatus(message) {
+      const mount = document.querySelector("#statusMount");
+      mount.hidden = !message;
+      mount.textContent = message || "";
+    }
+
+    function expandedParagraphs(details) {
+      const base = Array.isArray(details?.full) ? details.full : [];
+      return [...base, t("extra1"), t("extra2")];
+    }
+
+    function renderLanguage() {
+      document.documentElement.lang = currentLang === "kg" ? "ky" : "ru";
+      document.querySelectorAll("[data-lang]").forEach(button => {
+        button.classList.toggle("active", button.dataset.lang === currentLang);
+      });
+      document.querySelectorAll("[data-i18n]").forEach(node => {
+        node.textContent = t(node.dataset.i18n);
+      });
+      document.querySelector("#sourceText").innerHTML = t("source");
+      document.querySelector("#languageNote").textContent = t("langNote");
+      document.querySelector("#examTip").textContent = t("tip");
+    }
+
+    function renderTicket() {
+      renderLanguage();
+      const ticket = ticketsData[ticketIndex];
+      const details = activeDetails()[ticketIndex];
+      if (!ticket || !details) {
+        document.querySelector("#ticketBadge").textContent = t("ticket");
+        document.querySelector("#ticketTitle").textContent = t("loadingTitle");
+        document.querySelector("#ticketLead").textContent = t("loadingLead");
+        return;
+      }
+
+      const number = ticketNumber();
+      document.title = `${t("ticket")} ${number} - ${t("pageTitle")}`;
+      document.querySelector("#ticketBadge").textContent = `${t("ticket")} ${number}`;
+      document.querySelector("#ticketTitle").textContent = `${ticket[0]} + ${ticket[1]}`;
+      document.querySelector("#ticketLead").textContent = currentLang === "kg"
+        ? "Бул жерде кыска жооп, толук жооп жана экзаменде айта турган негизги пункттар бар."
+        : "Здесь есть краткий ответ, полный ответ и опорные пункты для устной подготовки.";
+      document.querySelector("#questionList").innerHTML = ticket.map(question => `<li>${question}</li>`).join("");
+      document.querySelector("#shortText").textContent = details.short || "";
+      document.querySelector("#fullText").innerHTML = expandedParagraphs(details).map(paragraph => `<p>${paragraph}</p>`).join("");
+      document.querySelector("#importantList").innerHTML = (details.important || []).map(item => `<li>${item}</li>`).join("");
+
+      const prev = document.querySelector("#prevTicket");
+      const next = document.querySelector("#nextTicket");
+      const hasFullData = ticketsData.length > 1;
+      const hasPrev = hasFullData && ticketIndex > 0;
+      const hasNext = hasFullData && ticketIndex < ticketsData.length - 1;
+      prev.href = hasPrev ? answerUrl(ticketIndex - 1) : "#";
+      next.href = hasNext ? answerUrl(ticketIndex + 1) : "#";
+      prev.textContent = hasPrev ? t("prev") : t("noPrev");
+      next.textContent = hasNext ? t("next") : t("noNext");
+      prev.setAttribute("aria-disabled", hasPrev ? "false" : "true");
+      next.setAttribute("aria-disabled", hasNext ? "false" : "true");
+      showStatus(loadedFromSnapshot ? t("snapshotNotice") : "");
+    }
+
+    document.addEventListener("click", event => {
+      const themeButton = event.target.closest("[data-theme-toggle]");
+      if (themeButton) {
+        applyTheme(currentTheme() === "dark" ? "light" : "dark");
+        return;
+      }
+
+      const langButton = event.target.closest("[data-lang]");
+      if (langButton) {
+        currentLang = langButton.dataset.lang;
+        try {
+          localStorage.setItem("historyExamLang", currentLang);
+        } catch {
+          // Language choice still applies to the current page.
+        }
+        const url = new URL(location.href);
+        url.searchParams.set("ticket", String(ticketNumber()));
+        url.searchParams.set("lang", currentLang);
+        history.replaceState(null, "", url);
+        renderTicket();
+      }
+    });
+
+    applyTheme(currentTheme());
+    loadData().then(renderTicket);
+  </script>
+</body>
+</html>

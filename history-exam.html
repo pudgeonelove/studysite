@@ -1,0 +1,1940 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="История KG">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <title>Госэкзамен по истории Кыргызстана - 9 класс</title>
+  <script>
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem("kgStudyTheme") || "light";
+        document.documentElement.dataset.theme = savedTheme === "dark" ? "dark" : "light";
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --paper: #f7f7f2;
+      --white: #ffffff;
+      --ink: #172133;
+      --muted: #5f6978;
+      --line: rgba(23, 33, 51, 0.12);
+      --red: #c74343;
+      --blue: #2866d6;
+      --green: #0d947f;
+      --gold: #d89026;
+      --violet: #7353ba;
+      --shadow: 0 22px 60px rgba(23, 33, 51, 0.14);
+      --radius: 8px;
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color-scheme: light;
+    }
+
+    :root[data-theme="dark"] {
+      --paper: #09111d;
+      --white: #121b2a;
+      --ink: #eef4ff;
+      --muted: #a9b5c6;
+      --line: rgba(232, 239, 250, 0.16);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(247, 247, 242, 0.82), rgba(247, 247, 242, 0.98)),
+        url("assets/study-map.png") center top / cover no-repeat fixed,
+        var(--paper);
+      letter-spacing: 0;
+      overflow-x: hidden;
+      overflow-wrap: anywhere;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(23, 33, 51, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 33, 51, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.78), transparent 72%);
+    }
+
+    a { color: inherit; }
+
+    button { border: 0; cursor: pointer; font: inherit; touch-action: manipulation; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: calc(20px + env(safe-area-inset-top)) 0 calc(52px + env(safe-area-inset-bottom));
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      min-height: 62px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      box-shadow: 0 14px 28px rgba(199, 67, 67, 0.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.05rem, 1rem + 0.7vw, 1.5rem);
+      line-height: 1.1;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .button,
+    .primary {
+      min-height: 42px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      text-decoration: none;
+      font-weight: 780;
+      white-space: nowrap;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 16px 34px rgba(199, 67, 67, 0.22);
+    }
+
+    .button:hover,
+    .primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .lang-switch button {
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 850;
+    }
+
+    .lang-switch button.active {
+      background: var(--red);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(199, 67, 67, 0.18);
+    }
+
+    .hero {
+      min-height: 300px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(270px, 0.8fr);
+      align-items: end;
+      gap: 28px;
+      padding: clamp(24px, 4vw, 52px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.80)),
+        linear-gradient(90deg, rgba(199, 67, 67, 0.13), rgba(13, 148, 127, 0.10));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--green), var(--blue));
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--red);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    .hero h2 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2rem, 1.36rem + 3.1vw, 4.25rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: #354052;
+      line-height: 1.68;
+      font-size: clamp(1rem, 0.96rem + 0.32vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .fact-grid {
+      display: grid;
+      gap: 10px;
+      align-self: stretch;
+      align-content: end;
+    }
+
+    .fact {
+      min-height: 78px;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      display: grid;
+      gap: 5px;
+    }
+
+    .fact strong {
+      font-size: 1.55rem;
+      line-height: 1;
+    }
+
+    .fact span {
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 0.9rem;
+    }
+
+    .notice {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(216, 144, 38, 0.28);
+      background: rgba(255, 247, 232, 0.86);
+      color: #65410e;
+      line-height: 1.55;
+    }
+
+    .section-title {
+      margin: 34px 0 16px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: clamp(1.25rem, 1.02rem + 1vw, 1.8rem);
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card,
+    .wide-card,
+    .ticket-card,
+    .source-panel {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      box-shadow: 0 14px 42px rgba(23, 33, 51, 0.09);
+    }
+
+    .card {
+      padding: 17px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .card h4,
+    .wide-card h4,
+    .ticket-card h4 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .card p,
+    .ticket-card p {
+      margin: 0;
+      color: #354052;
+      line-height: 1.62;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .wide-card {
+      padding: clamp(18px, 3vw, 28px);
+      border-left: 5px solid var(--accent, var(--red));
+    }
+
+    .wide-card p {
+      margin: 12px 0 0;
+      color: #303c4d;
+      line-height: 1.78;
+    }
+
+    .wide-card ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #344052;
+      line-height: 1.68;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .chip {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      color: #344052;
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .ticket-card {
+      min-height: 238px;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      text-align: left;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(250, 252, 255, 0.88)),
+        rgba(255, 255, 255, 0.86);
+    }
+
+    .ticket-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: var(--accent, var(--red));
+    }
+
+    .ticket-card:hover,
+    .ticket-card:focus-visible {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 54px rgba(23, 33, 51, 0.16);
+      outline: 0;
+      border-color: color-mix(in srgb, var(--accent, var(--red)) 30%, #ffffff);
+    }
+
+    .ticket-card:active {
+      transform: translateY(-2px);
+    }
+
+    .ticket-card ol {
+      margin: 0;
+      padding-left: 20px;
+      color: #303c4d;
+      line-height: 1.52;
+    }
+
+    .ticket-card li + li {
+      margin-top: 8px;
+    }
+
+    .answer-plan {
+      margin: 0;
+      padding-left: 18px;
+      color: #4c5667;
+      line-height: 1.56;
+      font-size: 0.93rem;
+    }
+
+    .open-hint {
+      color: var(--red);
+      font-weight: 850;
+      font-size: 0.9rem;
+    }
+
+    .ticket-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+    }
+
+    .answer-page-link {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      background: rgba(199, 67, 67, 0.10);
+      color: #8f2d2d;
+      border: 1px solid rgba(199, 67, 67, 0.18);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 850;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .answer-page-link:hover {
+      transform: translateY(-1px);
+      background: rgba(199, 67, 67, 0.15);
+    }
+
+    .modal-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 247, 232, 0.82);
+      border-color: rgba(216, 144, 38, 0.25);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.46);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-backdrop[hidden] {
+      display: none;
+    }
+
+    .modal-card {
+      width: min(960px, 100%);
+      max-height: min(86vh, 860px);
+      overflow: auto;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.92)),
+        var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      box-shadow: 0 28px 90px rgba(15, 23, 42, 0.34);
+      transform: translateY(18px) scale(0.97);
+      transition: transform 260ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .modal-backdrop.open .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-head h3 {
+      margin: 7px 0 0;
+      font-size: clamp(1.35rem, 1.1rem + 1.25vw, 2.15rem);
+      line-height: 1.08;
+    }
+
+    .modal-close {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      background: rgba(23, 33, 51, 0.08);
+      color: var(--ink);
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(199, 67, 67, 0.12);
+      transform: rotate(4deg);
+    }
+
+    .modal-body {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .modal-section {
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.86);
+      animation: sectionIn 360ms ease both;
+    }
+
+    .modal-section:nth-child(2) { animation-delay: 60ms; }
+    .modal-section:nth-child(3) { animation-delay: 120ms; }
+    .modal-section:nth-child(4) { animation-delay: 180ms; }
+    .modal-section:nth-child(5) { animation-delay: 220ms; }
+
+    @keyframes sectionIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-section h4 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .modal-section p {
+      margin: 0;
+      color: #303c4d;
+      line-height: 1.78;
+    }
+
+    .modal-section p + p {
+      margin-top: 12px;
+    }
+
+    .key-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #303c4d;
+      line-height: 1.66;
+    }
+
+    .ticket-questions {
+      margin: 0;
+      padding-left: 20px;
+      color: #303c4d;
+      line-height: 1.58;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .exam-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .quiz-box {
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(40, 102, 214, 0.2);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 14px 42px rgba(23, 33, 51, 0.09);
+    }
+
+    .quiz-box h4 {
+      margin: 0 0 12px;
+    }
+
+    .question {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.92);
+      margin-top: 10px;
+    }
+
+    .question strong {
+      line-height: 1.42;
+    }
+
+    .answer {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .answer input { accent-color: var(--red); }
+
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(13, 148, 127, 0.22);
+      background: rgba(240, 250, 247, 0.92);
+      color: #204d44;
+      line-height: 1.5;
+    }
+
+    .source-panel {
+      margin-top: 22px;
+      padding: 18px;
+    }
+
+    .source-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .source-panel p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .source-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .source-list a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 0.88rem;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: rgba(23, 33, 51, 0.66);
+      line-height: 1.5;
+      font-size: 0.88rem;
+    }
+
+    .theme-toggle {
+      width: 42px;
+      min-width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      display: inline-grid;
+      place-items: center;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(23, 33, 51, 0.08);
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(23, 33, 51, 0.13);
+    }
+
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      stroke-width: 2.2;
+    }
+
+    :root[data-theme="dark"] body {
+      background:
+        linear-gradient(180deg, rgba(7, 13, 24, 0.88), rgba(7, 13, 24, 0.98)),
+        url("assets/study-map.png") center top / cover no-repeat fixed,
+        var(--paper);
+    }
+
+    :root[data-theme="dark"] body::before {
+      background-image:
+        linear-gradient(rgba(232, 239, 250, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 239, 250, 0.045) 1px, transparent 1px);
+    }
+
+    :root[data-theme="dark"] .button,
+    :root[data-theme="dark"] .lang-switch,
+    :root[data-theme="dark"] .theme-toggle,
+    :root[data-theme="dark"] .fact,
+    :root[data-theme="dark"] .chip,
+    :root[data-theme="dark"] .source-list a {
+      background: rgba(18, 27, 42, 0.78);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    :root[data-theme="dark"] .hero {
+      background:
+        linear-gradient(120deg, rgba(18, 27, 42, 0.96), rgba(18, 27, 42, 0.78)),
+        linear-gradient(90deg, rgba(199, 67, 67, 0.22), rgba(13, 148, 127, 0.16));
+      border-color: rgba(232, 239, 250, 0.14);
+    }
+
+    :root[data-theme="dark"] .card,
+    :root[data-theme="dark"] .wide-card,
+    :root[data-theme="dark"] .ticket-card,
+    :root[data-theme="dark"] .source-panel,
+    :root[data-theme="dark"] .quiz-box,
+    :root[data-theme="dark"] .modal-card {
+      background: rgba(18, 27, 42, 0.9);
+      border-color: rgba(232, 239, 250, 0.14);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    :root[data-theme="dark"] .ticket-card {
+      background:
+        linear-gradient(180deg, rgba(18, 27, 42, 0.96), rgba(10, 17, 29, 0.88)),
+        rgba(18, 27, 42, 0.9);
+    }
+
+    :root[data-theme="dark"] .hero-copy,
+    :root[data-theme="dark"] .card p,
+    :root[data-theme="dark"] .wide-card p,
+    :root[data-theme="dark"] .wide-card ul,
+    :root[data-theme="dark"] .ticket-card ol,
+    :root[data-theme="dark"] .answer-plan,
+    :root[data-theme="dark"] .modal-section p,
+    :root[data-theme="dark"] .key-list,
+    :root[data-theme="dark"] .ticket-questions {
+      color: #d6deeb;
+    }
+
+    :root[data-theme="dark"] .notice,
+    :root[data-theme="dark"] .modal-cta {
+      background: rgba(216, 144, 38, 0.13);
+      color: #ffe2ae;
+      border-color: rgba(216, 144, 38, 0.32);
+    }
+
+    :root[data-theme="dark"] .answer-page-link {
+      background: rgba(199, 67, 67, 0.18);
+      color: #ffd7d7;
+      border-color: rgba(199, 67, 67, 0.36);
+    }
+
+    :root[data-theme="dark"] .modal-head {
+      background: rgba(18, 27, 42, 0.94);
+      border-color: var(--line);
+    }
+
+    :root[data-theme="dark"] .modal-section,
+    :root[data-theme="dark"] .question,
+    :root[data-theme="dark"] .answer {
+      background: rgba(10, 17, 29, 0.66);
+      border-color: rgba(232, 239, 250, 0.14);
+    }
+
+    :root[data-theme="dark"] .result {
+      background: rgba(13, 148, 127, 0.12);
+      color: #c9f8ed;
+      border-color: rgba(13, 148, 127, 0.32);
+    }
+
+    :root[data-theme="dark"] .footer {
+      color: rgba(232, 239, 250, 0.68);
+    }
+
+    @media (max-width: 1020px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ticket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      body { background-attachment: scroll; }
+      :root[data-theme="dark"] body { background-attachment: scroll; }
+      .shell { width: min(100% - 22px, 760px); padding-top: 10px; }
+      .topbar,
+      .hero,
+      .exam-layout { grid-template-columns: 1fr; }
+      .topbar { align-items: start; }
+      .lang-switch { width: 100%; }
+      .lang-switch button { flex: 1; }
+    }
+
+    @media (max-width: 560px) {
+      .cards,
+      .ticket-grid { grid-template-columns: 1fr; }
+      .hero,
+      .wide-card,
+      .quiz-box { padding: 18px; }
+      .button,
+      .primary { width: 100%; }
+
+      .modal-backdrop {
+        padding: 0;
+        place-items: stretch;
+      }
+
+      .modal-card {
+        width: 100%;
+        min-height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .modal-head {
+        padding-top: calc(14px + env(safe-area-inset-top));
+      }
+
+      .modal-body {
+        padding-bottom: calc(18px + env(safe-area-inset-bottom));
+      }
+
+      .ticket-card {
+        min-height: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">Э</div>
+      <div>
+        <h1 data-i18n="pageTitle">Госэкзамен по истории Кыргызстана</h1>
+        <p data-i18n="pageSubtitle">9 класс - устный ответ, билеты, повторение и тренажер</p>
+      </div>
+      </div>
+      <div class="hero-actions">
+        <div class="lang-switch" aria-label="Выбор языка">
+          <button type="button" data-lang="ru" class="active">RU</button>
+          <button type="button" data-lang="kg">KG</button>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить черную тему" title="Включить черную тему"></button>
+        <a class="button" href="index.html" data-i18n="backHome">← Ко всем предметам</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">9 класс • Кыргызстан • история</p>
+        <h2 data-i18n="heroTitle">Готовь ответ как историк</h2>
+        <p class="hero-copy" data-i18n="heroCopy">Эта страница собрана по открытым материалам KAO, опубликованным экзаменационным вопросам и школьным источникам. Здесь не копируются готовые ответы из пособий: каждый блок помогает самому построить сильный устный ответ - с датой, причиной, личностями, итогом и значением.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#tickets" data-i18n="trainTickets">Тренировать билеты</a>
+        </div>
+      </div>
+      <div class="fact-grid">
+        <div class="fact"><strong>23</strong><span>билета в опубликованном PDF 2025</span></div>
+        <div class="fact"><strong>46</strong><span>вопросов: два вопроса в каждом билете</span></div>
+        <div class="fact"><strong>устно</strong><span>формат экзамена по найденному расписанию ИГА 2025</span></div>
+      </div>
+    </section>
+
+    <div class="notice">Актуальность: вопросы ниже перепроверены по опубликованному PDF 2025, в котором указано 23 билета. В открытых источниках также найдены расписания ИГА за 2024-2025 учебный год, где история Кыргызстана у 9 класса указана как устный экзамен 16 июня 2025 года. Для 2025-2026 учебного года проверь дату и финальный список билетов у школы, потому что официальные даты и комплекты могли обновиться.</div>
+
+    <section class="section-title">
+      <h3 id="tickets">Тренажер типовых билетов</h3>
+      <p>Формулировки вопросов сохранены дословно по опубликованному PDF 2025.</p>
+    </section>
+    <div class="toolbar">
+      <button class="primary" type="button" id="randomTicket">Случайный билет</button>
+      <span class="chip" id="chosenTicket">Выбери билет для устной тренировки</span>
+    </div>
+    <section class="ticket-grid" id="ticketGrid"></section>
+
+    <section class="source-panel">
+      <h3>Источники</h3>
+      <p>Страница использует открытые источники для структуры экзамена и школьного контекста. Тексты внутри страницы написаны как авторские конспекты и тренажеры.</p>
+      <div class="source-list">
+        <a href="https://www.kao.kg/images/stories/doc/217_007.pdf" target="_blank" rel="noreferrer">KAO: "Экзаменге даярданабыз"</a>
+        <a href="https://48.edubish.kg/wp-content/uploads/sites/79/2025/05/ekzamenatsionnye-voprosy-9-kl.pdf" target="_blank" rel="noreferrer">Вопросы госэкзамена 9 класса</a>
+        <a href="https://ru.kabar.kg/news/v-kyrgyzstane-nachalis-itogovye-ekzameny-dlya-vypusknikov-9-h-i-11-h-klassov/" target="_blank" rel="noreferrer">Kabar: расписание ИГА 2025</a>
+        <a href="https://sputnik.kg/20250512/mektep-bilim-okuuchu-ekzamen-1093921258.html" target="_blank" rel="noreferrer">Sputnik Кыргызстан: даты экзаменов</a>
+        <a href="https://78.edubish.kg/" target="_blank" rel="noreferrer">№78 мектеп-гимназиясы</a>
+        <a href="https://www.biblioteka.kg/book/1595" target="_blank" rel="noreferrer">Biblioteka.kg: история Кыргызстана 9</a>
+      </div>
+    </section>
+
+    <p class="footer">Подготовка к устному экзамену - это не заучивание чужого ответа, а умение спокойно объяснить тему. Используй эту страницу как тренажер, а даты и официальные правила текущего года уточняй у школы.</p>
+  </main>
+
+  <div class="modal-backdrop" id="ticketModal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <span class="chip" id="modalBadge">Билет</span>
+          <h3 id="modalTitle">Билет</h3>
+        </div>
+        <button class="modal-close" type="button" id="modalClose" aria-label="Закрыть окно">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </section>
+  </div>
+
+  <script>
+    const tickets = [
+      ["Первое упоминание в истории этнонима “кыргыз”. Тенир-Тоо – древняя родина кыргызов.", "Установление Советской власти в Кыргызстане."],
+      ["Саки. Государство Усуней.", "Провозглашение суверенной Кыргызской Республики."],
+      ["Государство Давань.", "Первый визит кыргызских послов в Россию. Атаке бий.А.Кучаков, Шергазы."],
+      ["Памятники каменного и бронзового веков на территории Кыргызстана.", "Подвиги воинов-кыргызстанцев во время Великой Отечественной войны."],
+      ["Борьба кыргызов за верховенство в Центральной Азии. Барсбек. (VII-VIII вв.).", "Промышленность Кыргызстана в период установления Советской власти до Великой Отечественной войны."],
+      ["Кыргызское Великодержавие. Алп Сол.", "Аграрная политика советской власти: коллективизация и оседание кочевников."],
+      ["Кыргызстан в X – начале XII вв. (Государства Караханидов. Каракитаи и найманы).", "Государственные символы и Конституция суверенной Кыргызской Республики."],
+      ["Общественно-политический строй, хозяйство и культура енисейских кыргызов.", "Кыргызская Автономная Республика. Создание Кыргызской ССР (1926 г., 1936 г.) Ж.Абдрахманов, А.Орозбеков, А.Сыдыков."],
+      ["Кыргызстан в средние века (вторая половина XIII в. – XIV в.). Государство Хайду.", "Восстановление и развитие народного хозяйства Кыргызстана после Великой Отечественной войны (1945-1964-е гг.). И.Раззаков"],
+      ["Присоединение Северного Кыргызстана к России. Шабдан батыр. Байтик батыр.", "Образование и наука в Кыргызстане в Советское время."],
+      ["Борьба кыргызов против захватнической политики Кокандского ханства. Ажы бий. Тайлак батыр. Кубат бий.", "Развитие культуры Кыргызстана в Советское время. Г.Айтиев, Б.Бейшеналиева, О.Мануйлова, С.Чуйков."],
+      ["Хунны – предки тюркских народов.", "Усиление тоталитарного режима. Массовые репрессии. «Ата Бейит»."],
+      ["Формирование кыргызского народа (XVI в.). Мухаммед Кыргыз.", "Образование Кара-Кыргызской автономной области."],
+      ["Народное восстание 1873-1876-х гг. Исхак Асан уулу.", "Обстановка в Кыргызстане после падения царского самодержавия. Политика Временного правительства."],
+      ["Эпоха тюркских каганатов и их наследников.", "Алайские кыргызы в конце XIX века. Курманджан датка."],
+      ["Андижанское восстание. Мадали эшен, Зияддин Максым уулу.", "Реализация и результаты земельной и водной реформы в Кыргызстане."],
+      ["Наследия Махмуда Кашгари и Жусупа Баласагуна.", "Национально-освободительное движение кыргызского народа 1916 года."],
+      ["Первые историки и просветители Кыргызстана. Осмонаалы Сыдык уулу, Б.Солтоноев, И.Арабаев.", "Международные связи и внешняя политика Кыргызской Республики."],
+      ["Феодальные междоусобные войны в северном Кыргызстане. Боромбай бий. Ормон хан.", "Образование, наука и культура в суверенном Кыргызстане."],
+      ["Государство Моголистан.", "Экономика Кыргызстана в годы Великой Отечественной войны. Помощь фронту."],
+      ["Оосвободительное движение Джангир ходжа и Суранчи бий.", "Кыргызстан в годы “Развитого социализма” (1965-1985-е гг.). Т.Усубалиев."],
+      ["Роль кыргызских правителей в истории Кокандского ханства. Акбото бий, Кубат бий, Нусуп бий, Алымбек датка.", "Гражданская война в Кыргызстане и её особенности (1918-1920-е гг)."],
+      ["Историко - архитектурные памятники в Кыргызстане в средние века.", "Кыргызстан на новом этапе демократического развития."]
+    ];
+
+    const ticketsKg = [
+      ["Кыргыздар жөнүндө алгачкы маалыматтар жана тарыхый аймактар", "Кыргызстанда совет бийлигинин орношу", ["этноним", "Теңир-Тоо", "1917-1918", "Советтер"]],
+      ["Сактар жана усундар - аймактагы байыркы коомдор", "Кыргыз Республикасынын көз карандысыздыгынын жарыяланышы", ["көчмөндөр", "Фергана жана Жетисуу", "1991", "эгемендик"]],
+      ["Даван мамлекети жана соода байланыштары", "Кыргыздардын Россия менен алгачкы дипломатиялык байланыштары", ["Фергана", "Жибек жолу", "Атаке бий", "элчилик"]],
+      ["Таш жана коло доорлорунун эстеликтери", "Улуу Ата Мекендик согуштагы кыргызстандыктардын эрдиктери", ["археология", "фронт жана тыл", "эрдик", "эс тутум"]],
+      ["Барсбек жана кыргыздардын Борбор Азиядагы таасир үчүн күрөшү", "Улуу Ата Мекендик согушка чейинки Кыргызстандын өнөр жайы", ["каган", "Енисей", "индустриялаштыруу", "ишканалар"]],
+      ["Кыргыздардын улуу державасы жана Алп Сол", "Коллективдештирүү жана отурукташтыруу саясаты", ["мамлекеттүүлүк", "көчмөндөр", "колхоздор", "кесепеттер"]],
+      ["Карахандар, каракытайлар жана наймандар", "Эгемендүү Кыргызстандын мамлекеттик белгилери жана Конституциясы", ["ислам", "шаарлар", "туу", "негизги мыйзам"]],
+      ["Енисей кыргыздары: түзүлүшү, чарбасы жана маданияты", "Кыргыз автономиясы жана Кыргыз ССРинин түзүлүшү", ["рун жазуусу", "мал чарба", "1926", "1936"]],
+      ["XIII-XIV кылымдардагы Кыргызстан жана Хайду мамлекети", "Согуштан кийинки чарбаны калыбына келтирүү жана Исхак Раззаков", ["монгол доору", "саясий карта", "калыбына келтирүү", "Раззаков"]],
+      ["Түндүк Кыргызстандын Россияга кошулушу", "Совет мезгилиндеги билим берүү жана илим", ["Шабдан", "Байтик", "мектептер", "илим"]],
+      ["Кокон хандыгынын саясатына каршы күрөш", "Советтик Кыргызстандын маданияты", ["Тайлак", "Кубат", "Айтиев", "Чуйков"]],
+      ["Хунндар жана байыркы түрк мурастары", "Репрессиялар жана Ата-Бейит эскерүүсү", ["көчмөн бирикмелер", "тоталитаризм", "интеллигенция", "эс тутум"]],
+      ["XVI кылымда кыргыз элинин калыптанышы", "Кара-Кыргыз автономиялуу облусунун түзүлүшү", ["Мухаммед Кыргыз", "этногенез", "1924", "мамлекеттүүлүк"]],
+      ["1873-1876-жылдардагы көтөрүлүштөр жана Исхак Асан уулу", "Падышалык бийлик кулагандан кийинки Убактылуу өкмөттүн саясаты", ["Кокон", "каршылык", "1917", "саясий кризис"]],
+      ["Түрк каганаттары жана алардын мурасы", "Алай кыргыздары жана Курманжан датка", ["каганат", "мурас", "Алай", "дипломатия"]],
+      ["Анжиян көтөрүлүшү жана анын катышуучулары", "Жер-суу реформалары", ["Мадали эшен", "Зияддин Максым", "реформа", "жер"]],
+      ["Кашгари жана Баласагуни - маданий мурас", "1916-жылдагы улуттук-боштондук кыймыл", ["сөздүк", "Кутадгу билиг", "Үркүн", "себептер"]],
+      ["Кыргызстандын алгачкы тарыхчылары жана агартуучулары", "Эгемендүү Кыргызстандын тышкы саясаты", ["Сыдык уулу", "Солтоноев", "эл аралык байланыш", "дипломатия"]],
+      ["Түндүк Кыргызстандагы ич ара согуштар жана Ормон хан", "Эгемендүү Кыргызстандагы билим, илим жана маданият", ["Боромбай", "Ормон", "реформалар", "маданият"]],
+      ["Моголстан жана орто кылымдагы саясий карта", "Согуш жылдарындагы Кыргызстандын экономикасы жана фронтко жардам", ["постмонгол доору", "аймак", "тыл", "эвакуация"]],
+      ["Чыгыш Түркстандагы боштондук кыймылдар жана Суранчы бий", "Өнүккөн социализм жылдарындагы Кыргызстан жана Усубалиев", ["Жангир кожо", "Суранчы", "1960-1980-жылдар", "Усубалиев"]],
+      ["Кокон хандыгынын тарыхындагы кыргыз башкаруучулары", "Кыргызстандагы жарандык согуш", ["Нусуп", "Алымбек датка", "1918-1920", "өзгөчөлүктөр"]],
+      ["Орто кылымдагы тарыхый-архитектуралык эстеликтер", "Кыргызстан демократиялык өнүгүүнүн жаңы этабында", ["мавзолейлер", "шаарлар", "реформалар", "коом"]],
+      ["Кокон хандыгы жана кыргыз жетекчилеринин ролу", "Эгемендүү Кыргыз Республикасындагы саясий өзгөрүүлөр", ["Нүзүп бий", "Алымбек датка", "бийлик", "азыркы мезгил"]],
+      ["Караханиддер мамлекети жана орто кылымдык мурас", "Кыргыз мамлекеттүүлүгүнүн этаптары", ["942-1212", "маданият", "уланмалуулук", "мамлекет"]]
+    ];
+
+    const ticketDetails = [
+      {
+            "short": "Этноним «кыргыз» впервые встречается в древних китайских источниках в форме, близкой к «гэгунь/гяньгунь», и связывается с ранней историей кыргызов. Тенир-Тоо и Енисей считаются важными историческими пространствами кыргызов. Советская власть в Кыргызстане утвердилась после революций 1917 года и открыла новый политический этап.",
+            "full": [
+                  "Первое письменное упоминание этнонима «кыргыз» относят к древнекитайским хроникам, где встречаются названия, передающие звучание раннего имени кыргызов. В истории кыргызов важны два пространства: Енисей, где сложилась сильная древняя традиция кыргызской государственности, и Тенир-Тоо, связанный с последующим развитием народа на территории современного Кыргызстана. Этноним показывает древность народа и его место среди тюркских и центральноазиатских общностей.",
+                  "Советская власть в Кыргызстане устанавливалась после Февральской и Октябрьской революций 1917 года. В 1918 году Советы укрепились в ряде городов и районов, начались новые органы управления, национализация, земельные и социальные преобразования. Процесс шел сложно из-за гражданской войны, борьбы разных политических сил и особенностей местного общества. Итогом стало включение Кыргызстана в советскую систему власти."
+            ],
+            "important": [
+                  "Этноним: кыргыз",
+                  "Источник: древнекитайские хроники",
+                  "Место: Енисей и Тенир-Тоо",
+                  "Событие: установление Советской власти, 1917-1918 годы"
+            ]
+      },
+      {
+            "short": "Саки были древними кочевыми племенами, известными военным искусством, скотоводством и курганной культурой. Усуни создали государственное объединение в Жетысу и поддерживали связи с соседями. Суверенная Кыргызская Республика была провозглашена 31 августа 1991 года.",
+            "full": [
+                  "Саки жили на обширных пространствах Центральной Азии и были связаны с кочевым скотоводством, военной организацией и яркой культурой. Об их жизни рассказывают курганы, оружие, украшения и письменные сведения соседних народов. Государство усуней возникло в Жетысу и соседних районах, имело правителя, войско, хозяйство и дипломатические связи с Китаем и другими государствами.",
+                  "Провозглашение суверенной Кыргызской Республики связано с распадом СССР. 31 августа 1991 года была принята Декларация о государственной независимости. Кыргызстан получил право самостоятельно определять внутреннюю и внешнюю политику, создавать государственные институты, принимать Конституцию, устанавливать символы и развивать международные отношения."
+            ],
+            "important": [
+                  "Саки: кочевники, курганы, военная культура",
+                  "Усуни: Жетысу, государственное объединение",
+                  "Дата: 31 августа 1991 года",
+                  "Событие: независимость Кыргызской Республики"
+            ]
+      },
+      {
+            "short": "Давань располагалась в Ферганской долине и была известна городами, земледелием, торговлей и знаменитыми конями. Первый визит кыргызских послов в Россию связан с дипломатией Атаке бия, который отправил представителей для установления связей.",
+            "full": [
+                  "Государство Давань находилось в Ферганской долине. Оно отличалось развитым земледелием, городами, ремеслом и торговыми связями по Великому шелковому пути. В китайских источниках Давань известна также своими быстрыми и выносливыми конями. Значение Давани состоит в том, что она показывает высокий уровень оседлой культуры в регионе.",
+                  "Первый визит кыргызских послов в Россию связан с внешнеполитическими действиями Атаке бия. Он стремился укрепить положение кыргызов через дипломатические связи. В посольстве упоминаются А. Кучаков и Шергазы. Это событие не означало присоединение к России, а было попыткой установить политические отношения и получить поддержку в сложной региональной обстановке."
+            ],
+            "important": [
+                  "Место: Ферганская долина",
+                  "Давань: города, земледелие, кони",
+                  "Личность: Атаке бий",
+                  "Событие: первое кыргызское посольство в Россию"
+            ]
+      },
+      {
+            "short": "Памятники каменного и бронзового веков доказывают древнее заселение территории Кыргызстана. К ним относятся стоянки, петроглифы, орудия труда и погребальные памятники. В годы Великой Отечественной войны кыргызстанцы сражались на фронте и трудились в тылу, проявив массовый героизм.",
+            "full": [
+                  "На территории Кыргызстана найдены памятники каменного и бронзового веков: древние стоянки, каменные орудия, наскальные рисунки, курганы и следы раннего хозяйства. Они показывают, что люди здесь занимались охотой, собирательством, затем скотоводством и земледелием. Петроглифы и археологические находки помогают восстановить быт, верования и занятия древнего населения.",
+                  "Во время Великой Отечественной войны десятки тысяч кыргызстанцев ушли на фронт. Они участвовали в обороне Москвы, Сталинградской битве, освобождении Европы и других сражениях. Среди известных героев называют Д. Шопокова, Ч. Тулебердиева и других воинов. Кыргызстан также помогал фронту трудом, продовольствием, сырьем и приемом эвакуированных предприятий и людей."
+            ],
+            "important": [
+                  "Памятники: стоянки, петроглифы, курганы",
+                  "Эпохи: каменный и бронзовый века",
+                  "Событие: Великая Отечественная война, 1941-1945",
+                  "Роль Кыргызстана: фронт и тыл"
+            ]
+      },
+      {
+            "short": "В VII-VIII веках Барсбек стремился укрепить самостоятельность енисейских кыргызов и принял титул кагана. До Великой Отечественной войны в советском Кыргызстане развивалась промышленность: горная добыча, энергетика, переработка сырья и фабрично-заводское производство.",
+            "full": [
+                  "Борьба кыргызов за верховенство в Центральной Азии в VII-VIII веках связана с усилением енисейских кыргызов. Барсбек был одним из ярких правителей этого периода. Он принял титул кагана, вел активную политику и стремился укрепить независимость кыргызов среди сильных соседей. Его деятельность стала символом ранней кыргызской государственности.",
+                  "В период от установления Советской власти до Великой Отечественной войны промышленность Кыргызстана развивалась через индустриализацию. Создавались предприятия горной, угольной, легкой и пищевой промышленности, строились дороги и энергетические объекты, формировались рабочие кадры. Промышленный рост изменил хозяйственную структуру республики и усилил ее значение в СССР."
+            ],
+            "important": [
+                  "Дата: VII-VIII века",
+                  "Личность: Барсбек каган",
+                  "Событие: борьба за самостоятельность",
+                  "Промышленность: индустриализация до 1941 года"
+            ]
+      },
+      {
+            "short": "Кыргызское Великодержавие связано с усилением кыргызов после разгрома Уйгурского каганата в IX веке. Алп Сол упоминается как военный деятель этой эпохи. Коллективизация и оседание кочевников изменили традиционное хозяйство, усилили колхозную систему и контроль государства.",
+            "full": [
+                  "Кыргызское Великодержавие стало одним из наиболее значимых этапов средневековой истории кыргызов. После победы над Уйгурским каганатом в IX веке кыргызская власть распространилась на большие территории Центральной Азии. Государство опиралось на военную силу, кочевое хозяйство, союзные связи и управление племенами. Алп Сол связан с военной элитой и защитой интересов кыргызского государства.",
+                  "Аграрная политика советской власти включала коллективизацию и перевод части кочевого населения к оседлому образу жизни. Создавались колхозы и совхозы, земля и скот переходили под контроль коллективного хозяйства. Эти меры меняли быт, традиционные формы собственности и хозяйственные привычки. Итогом стало укрепление советской системы на селе, но процесс сопровождался трудностями и сопротивлением."
+            ],
+            "important": [
+                  "Дата: IX век",
+                  "Событие: Кыргызское Великодержавие",
+                  "Личность: Алп Сол",
+                  "Аграрная политика: коллективизация и оседание"
+            ]
+      },
+      {
+            "short": "В X - начале XII веков на территории Кыргызстана и соседних районов важную роль играли Караханиды, каракитаи и найманы. Караханиды развивали города, исламскую культуру и письменность. Символы и Конституция суверенного Кыргызстана закрепили основы независимого государства.",
+            "full": [
+                  "В X - начале XII веков важным государством региона были Караханиды. При них развивались города, торговля, ремесла, исламская культура и письменная традиция. Позже политическую карту изменили каракитаи и найманы, усилившие борьбу за власть в Центральной Азии. Этот период важен для понимания средневековой государственности и культурного развития Кыргызстана.",
+                  "Государственные символы Кыргызской Республики - флаг, герб и гимн - выражают независимость, историческую память и единство народа. Конституция является основным законом государства: она закрепляет права и обязанности граждан, систему власти, государственный строй и принципы суверенитета. Через символы и Конституцию оформляется политическая основа независимого Кыргызстана."
+            ],
+            "important": [
+                  "Период: X - начало XII века",
+                  "Государство: Караханиды",
+                  "Символы: флаг, герб, гимн",
+                  "Конституция: основной закон государства"
+            ]
+      },
+      {
+            "short": "Енисейские кыргызы имели кочевое хозяйство, военную организацию, родоплеменную структуру и развитую культуру. В 1926 году была образована Кыргызская АССР, а в 1936 году - Кыргызская ССР. Ж. Абдрахманов, А. Орозбеков и А. Сыдыков связаны с национально-государственным строительством.",
+            "full": [
+                  "Енисейские кыргызы занимались скотоводством, охотой, земледелием в отдельных районах, ремеслом и военным делом. Их общественно-политический строй опирался на власть знати, военную силу и племенные объединения. Культура включала письменные памятники, погребальные обряды, украшения, оружие и традиции, отражающие высокий уровень развития кочевого общества.",
+                  "В советский период кыргызская государственность прошла несколько этапов. В 1926 году была образована Кыргызская Автономная Советская Социалистическая Республика, а в 1936 году - Кыргызская Советская Социалистическая Республика в составе СССР. Ж. Абдрахманов, А. Орозбеков и А. Сыдыков участвовали в политических процессах, связанных с развитием национальной государственности и управления."
+            ],
+            "important": [
+                  "Енисейские кыргызы: хозяйство, войско, культура",
+                  "Дата: 1926 год - Кыргызская АССР",
+                  "Дата: 1936 год - Кыргызская ССР",
+                  "Личности: Ж. Абдрахманов, А. Орозбеков, А. Сыдыков"
+            ]
+      },
+      {
+            "short": "Во второй половине XIII-XIV века территория Кыргызстана была связана с постмонгольскими государствами, включая государство Хайду. После Великой Отечественной войны республика восстанавливала хозяйство, развивала промышленность, сельское хозяйство, образование и культуру; важную роль сыграл И. Раззаков.",
+            "full": [
+                  "Во второй половине XIII-XIV века история Кыргызстана развивалась в условиях последствий монгольского завоевания. Государство Хайду было одним из политических образований, связанных с борьбой за власть в Центральной Азии. Этот период характеризовался изменением границ, усилением феодальных отношений, перемещениями населения и включением кыргызских земель в широкие региональные процессы.",
+                  "После Великой Отечественной войны Кыргызстан восстанавливал народное хозяйство. В 1945-1964 годах развивались промышленность, транспорт, сельское хозяйство, образование и наука. И. Раззаков как руководитель уделял внимание подготовке кадров, школам, вузам и культурному развитию. Республика постепенно переходила от восстановления к дальнейшей модернизации."
+            ],
+            "important": [
+                  "Период: XIII-XIV века",
+                  "Государство: Хайду",
+                  "Период восстановления: 1945-1964 годы",
+                  "Личность: И. Раззаков"
+            ]
+      },
+      {
+            "short": "Присоединение Северного Кыргызстана к России проходило в XIX веке постепенно и было связано с политикой Российской империи, Кокандским ханством и местными лидерами. Шабдан батыр и Байтик батыр сыграли заметную роль в этих процессах. В советское время быстро развивались образование, грамотность, наука и подготовка специалистов.",
+            "full": [
+                  "Присоединение Северного Кыргызстана к России было длительным процессом XIX века. На него влияли давление Кокандского ханства, интересы Российской империи и позиция местных кыргызских лидеров. Шабдан батыр был влиятельным политическим деятелем, а Байтик батыр известен борьбой против кокандского влияния. В результате регион вошел в систему управления Российской империи.",
+                  "В советское время образование и наука в Кыргызстане получили большое развитие. Открывались школы, техникумы, институты, ликвидировалась неграмотность, готовились национальные кадры. Развивались научные учреждения, исследования природы, истории, языка и экономики. Вместе с этим образование находилось под идеологическим контролем советской системы."
+            ],
+            "important": [
+                  "Период: XIX век",
+                  "Место: Северный Кыргызстан",
+                  "Личности: Шабдан батыр, Байтик батыр",
+                  "Советский период: школы, вузы, наука"
+            ]
+      },
+      {
+            "short": "Кыргызы боролись против политики Кокандского ханства из-за налогов, произвола и ограничения самостоятельности. Ажы бий, Тайлак батыр и Кубат бий связаны с сопротивлением кокандскому влиянию. В советское время развивались театр, живопись, скульптура, балет и литература; известны Г. Айтиев, Б. Бейшеналиева, О. Мануйлова, С. Чуйков.",
+            "full": [
+                  "Борьба кыргызов против захватнической политики Кокандского ханства была вызвана тяжелыми налогами, вмешательством в местное управление и военным давлением. Ажы бий, Тайлак батыр и Кубат бий представляли разные формы сопротивления и защиты интересов кыргызского населения. Эта борьба показывает стремление кыргызов сохранить самостоятельность и традиционные права.",
+                  "Культура Кыргызстана в советское время развивалась в новых институциональных формах: театрах, музеях, художественных училищах, союзах писателей и художников. Г. Айтиев внес вклад в живопись, Б. Бейшеналиева стала символом балетного искусства, О. Мануйлова известна как скульптор, С. Чуйков - как художник. Советская культура сочетала национальные мотивы и общесоюзные идеологические требования."
+            ],
+            "important": [
+                  "Причина: налоги и давление Коканда",
+                  "Личности: Ажы бий, Тайлак батыр, Кубат бий",
+                  "Культура: театр, живопись, балет, скульптура",
+                  "Деятели: Г. Айтиев, Б. Бейшеналиева, О. Мануйлова, С. Чуйков"
+            ]
+      },
+      {
+            "short": "Хунны были крупным кочевым объединением Центральной Азии и повлияли на историю тюркских народов. Их государственная и военная традиция стала частью ранней степной истории. Усиление тоталитарного режима в СССР привело к массовым репрессиям, память о которых связана с мемориалом «Ата-Бейит».",
+            "full": [
+                  "Хунны занимают важное место в истории древней Центральной Азии. Они создали мощное кочевое объединение с сильной военной организацией, властью правителя и широкими внешними связями. Хуннская эпоха повлияла на последующую историю тюркских народов, потому что в степном мире сохранялись традиции кочевой государственности, военного устройства и миграций.",
+                  "В 1930-е годы в СССР усилился тоталитарный режим. Массовые репрессии затронули политических деятелей, интеллигенцию, представителей культуры, религии и обычных людей. В Кыргызстане память о жертвах связана с мемориальным комплексом «Ата-Бейит», где увековечены репрессированные. Репрессии нанесли тяжелый удар по обществу, культуре и национальной элите."
+            ],
+            "important": [
+                  "Хунны: кочевое объединение Центральной Азии",
+                  "Значение: влияние на тюркскую историю",
+                  "Период: массовые репрессии 1930-х годов",
+                  "Место памяти: Ата-Бейит"
+            ]
+      },
+      {
+            "short": "Формирование кыргызского народа в XVI веке было итогом длительного этнического процесса. Мухаммед Кыргыз связан с объединительными процессами и укреплением кыргызских племен. Кара-Кыргызская автономная область была образована в 1924 году и стала важным шагом к советской кыргызской государственности.",
+            "full": [
+                  "Формирование кыргызского народа завершалось постепенно и включало объединение родоплеменных групп, общность территории, языка, хозяйства и культуры. XVI век считается важным этапом этнической консолидации. Мухаммед Кыргыз, которого также связывают с Тагай бием, занимает важное место в исторической памяти как фигура, связанная с объединением кыргызов.",
+                  "Кара-Кыргызская автономная область была создана 14 октября 1924 года в ходе национально-территориального размежевания в Средней Азии. Ее образование стало важным этапом признания кыргызов как отдельной национально-политической общности в советской системе. Этот шаг подготовил дальнейшее создание Кыргызской автономии, а затем Кыргызской ССР."
+            ],
+            "important": [
+                  "Период: XVI век",
+                  "Личность: Мухаммед Кыргыз",
+                  "Дата: 14 октября 1924 года",
+                  "Событие: Кара-Кыргызская автономная область"
+            ]
+      },
+      {
+            "short": "Народное восстание 1873-1876 годов было направлено против Кокандского ханства и тяжелого положения населения. Исхак Асан уулу стал одним из лидеров движения. После падения царского самодержавия в 1917 году Временное правительство не решило главные вопросы Кыргызстана, особенно земельный и национальный.",
+            "full": [
+                  "Народное восстание 1873-1876 годов было связано с кризисом Кокандского ханства, налоговым гнетом, произволом власти и недовольством населения Ферганской долины. Исхак Асан уулу стал заметным лидером движения и выступал против ханской власти. Восстание показало силу народного недовольства, но было подавлено на фоне усиления Российской империи в регионе.",
+                  "После падения царского самодержавия в феврале 1917 года в Кыргызстане возникла новая политическая обстановка. Временное правительство обещало реформы, но не решило земельный вопрос, проблему переселенческой политики и национального равноправия. На местах продолжались социальные противоречия, что усилило борьбу разных политических сил и подготовило переход к советскому этапу."
+            ],
+            "important": [
+                  "Период: 1873-1876 годы",
+                  "Личность: Исхак Асан уулу",
+                  "Дата: 1917 год",
+                  "Проблема: земельный и национальный вопросы"
+            ]
+      },
+      {
+            "short": "Эпоха тюркских каганатов оставила важное политическое и культурное наследие: государственную власть, военную организацию, письменность и общие тюркские традиции. Алайские кыргызы в конце XIX века связаны с деятельностью Курманджан датки, которая была лидером и дипломатом.",
+            "full": [
+                  "Тюркские каганаты сыграли большую роль в истории Центральной Азии. Они создали формы кочевой государственности, систему военной власти, дипломатические связи и письменную культуру. Их наследники продолжали политические и культурные традиции тюркского мира. Для кыргызской истории этот период важен как часть общего происхождения, языка, военной организации и степной культуры.",
+                  "Алайские кыргызы в конце XIX века оказались в сложной политической ситуации после падения Кокандского ханства и усиления Российской империи. Курманджан датка была признанным лидером Алая. Она проявила себя как мудрый политик и дипломат, стремившийся сохранить народ от новых потрясений. Ее роль связана с управлением, переговорами и защитой интересов алайских кыргызов."
+            ],
+            "important": [
+                  "Период: эпоха тюркских каганатов",
+                  "Наследие: власть, войско, письменность",
+                  "Место: Алай",
+                  "Личность: Курманджан датка"
+            ]
+      },
+      {
+            "short": "Андижанское восстание 1898 года было антиколониальным и религиозно-политическим движением в Ферганской долине. С ним связаны Мадали эшен и Зияддин Максым уулу. Земельно-водная реформа в Кыргызстане была направлена на перераспределение земли и воды, ослабление последствий колониальной политики и поддержку местного населения.",
+            "full": [
+                  "Андижанское восстание произошло в 1898 году в Ферганской долине. Его возглавил Мадали эшен, а среди участников и сторонников упоминается Зияддин Максым уулу. Причинами были недовольство колониальной властью, социальное напряжение, земельные проблемы и религиозно-политические настроения. Восстание было подавлено, но осталось важным проявлением сопротивления.",
+                  "Земельно-водная реформа в Кыргызстане была связана с попыткой решить острые аграрные проблемы, возникшие из-за переселенческой и колониальной политики. Земля и вода перераспределялись в пользу местного населения, ограничивались прежние привилегии, создавались условия для нового хозяйственного устройства. Реформа имела важное социальное значение, но сопровождалась конфликтами и трудностями исполнения."
+            ],
+            "important": [
+                  "Дата: 1898 год",
+                  "Место: Андижан и Ферганская долина",
+                  "Личности: Мадали эшен, Зияддин Максым уулу",
+                  "Реформа: земля и вода"
+            ]
+      },
+      {
+            "short": "Махмуд Кашгари и Жусуп Баласагуни оставили выдающееся письменное наследие тюркской культуры. Кашгари известен трудом о тюркских языках, Баласагуни - поэмой «Кутадгу билиг». Национально-освободительное движение 1916 года было вызвано колониальной политикой, земельным вопросом и мобилизацией населения на тыловые работы.",
+            "full": [
+                  "Махмуд Кашгари и Жусуп Баласагуни являются выдающимися представителями средневековой тюркской культуры. Кашгари создал «Диван лугат ат-тюрк» - труд о тюркских языках, племенах и культуре. Баласагуни написал «Кутадгу билиг», где отражены идеи справедливого управления, морали и знания. Их наследие показывает высокий уровень письменной культуры тюркского мира.",
+                  "Национально-освободительное движение кыргызского народа 1916 года было вызвано колониальной политикой Российской империи, земельными проблемами, переселенческой политикой и указом о привлечении населения на тыловые работы. Восстание охватило разные районы, было жестоко подавлено и привело к большим человеческим потерям и Уркуну. Это событие занимает важное место в исторической памяти кыргызского народа."
+            ],
+            "important": [
+                  "Личность: Махмуд Кашгари",
+                  "Личность: Жусуп Баласагуни",
+                  "Дата: 1916 год",
+                  "Событие: национально-освободительное движение и Уркун"
+            ]
+      },
+      {
+            "short": "Осмонаалы Сыдык уулу, Б. Солтоноев и И. Арабаев были первыми историками и просветителями, связанными с изучением прошлого, образованием и развитием письменной культуры. Внешняя политика Кыргызской Республики направлена на сотрудничество с соседями, международными организациями, укрепление безопасности и развитие экономики.",
+            "full": [
+                  "Первые историки и просветители Кыргызстана сыграли важную роль в сохранении исторической памяти и развитии образования. Осмонаалы Сыдык уулу и Б. Солтоноев писали о прошлом кыргызов, собирали сведения, родословные и исторические материалы. И. Арабаев внес вклад в образование, письменность и подготовку учебных материалов. Их деятельность помогла формированию национального самосознания.",
+                  "Международные связи и внешняя политика Кыргызской Республики развиваются после получения независимости. Кыргызстан устанавливает отношения с соседними государствами, участвует в работе ООН, СНГ, ШОС, ОБСЕ и других организаций. Главные направления внешней политики - безопасность, экономическое сотрудничество, торговля, культурные связи, защита интересов граждан и укрепление государственного суверенитета."
+            ],
+            "important": [
+                  "Личности: О. Сыдык уулу, Б. Солтоноев, И. Арабаев",
+                  "Сфера: история, просвещение, образование",
+                  "Внешняя политика: соседи и международные организации",
+                  "Цель: суверенитет, безопасность, сотрудничество"
+            ]
+      },
+      {
+            "short": "Феодальные междоусобные войны в Северном Кыргызстане были связаны с борьбой родоплеменной знати за власть и влияние. Боромбай бий и Ормон хан были заметными лидерами своего времени. В суверенном Кыргызстане образование, наука и культура развиваются через школы, вузы, национальные программы, международные связи и сохранение культурного наследия.",
+            "full": [
+                  "Феодальные междоусобные войны в Северном Кыргызстане отражали раздробленность общества и борьбу местных лидеров за власть, пастбища, влияние и союзников. Боромбай бий был влиятельным правителем иссык-кульских кыргызов. Ормон хан стремился укрепить власть и объединить кыргызские племена. Междоусобицы ослабляли общество и делали его уязвимым перед внешним давлением.",
+                  "В суверенном Кыргызстане образование, наука и культура стали важной частью государственного развития. Расширились международные образовательные связи, развивались университеты, изучение кыргызского языка, истории и культуры. Культурная жизнь включает литературу, театр, кино, музыку, музеи и сохранение исторического наследия. Эти сферы укрепляют национальную идентичность и связь с современным миром."
+            ],
+            "important": [
+                  "Место: Северный Кыргызстан",
+                  "Личности: Боромбай бий, Ормон хан",
+                  "Причина: борьба за власть и влияние",
+                  "Суверенный период: образование, наука, культура"
+            ]
+      },
+      {
+            "short": "Моголистан был средневековым государством, возникшим в восточной части Чагатайского улуса и связанным с историей Тенир-Тоо и Восточного Туркестана. В годы Великой Отечественной войны экономика Кыргызстана работала на фронт: развивались производство, сельское хозяйство, эвакуация предприятий и помощь армии.",
+            "full": [
+                  "Государство Моголистан возникло в XIV веке на территории, связанной с Восточным Туркестаном, Жетысу и Тенир-Тоо. Оно было частью постмонгольской политической истории Центральной Азии. В Моголистане жили разные тюркские и монгольские группы, а кыргызы участвовали в политических и этнических процессах региона. Государство важно для понимания средневековой истории Кыргызстана.",
+                  "В годы Великой Отечественной войны экономика Кыргызстана была перестроена для помощи фронту. Республика поставляла продовольствие, сырье, одежду, лошадей, металлы и другую продукцию. На ее территории размещались эвакуированные предприятия и специалисты. Женщины, старики и подростки активно работали в тылу. Экономическая помощь Кыргызстана стала частью общей победы СССР."
+            ],
+            "important": [
+                  "Государство: Моголистан",
+                  "Период: XIV-XVI века",
+                  "Война: 1941-1945 годы",
+                  "Роль экономики: помощь фронту и тыловой труд"
+            ]
+      },
+      {
+            "short": "Освободительное движение Джангир ходжи и Суранчи бия связано с борьбой в Восточном Туркестане и участием кыргызских лидеров в региональных событиях. Кыргызстан в годы развитого социализма при Т. Усубалиеве переживал рост промышленности, строительства и инфраструктуры, но также сталкивался с бюрократизацией и застойными явлениями.",
+            "full": [
+                  "Освободительное движение Джангир ходжи и Суранчи бия относится к событиям в Восточном Туркестане и соседних районах, где местные силы выступали против внешнего господства и политического давления. Участие Суранчи бия показывает связь кыргызских лидеров с более широкими региональными процессами. Это движение отражало стремление населения к самостоятельности и защите своих интересов.",
+                  "В годы «развитого социализма» 1965-1985 годов Кыргызстаном долго руководил Т. Усубалиев. В этот период строились промышленные объекты, дороги, жилые массивы, развивались энергетика, сельское хозяйство, образование и культура. Одновременно усиливались бюрократия, зависимость от плановой экономики и застойные явления. Период сочетал социальные достижения и внутренние противоречия советской системы."
+            ],
+            "important": [
+                  "Место: Восточный Туркестан",
+                  "Личности: Джангир ходжа, Суранчи бий",
+                  "Период: 1965-1985 годы",
+                  "Личность: Т. Усубалиев"
+            ]
+      },
+      {
+            "short": "Кыргызские правители играли заметную роль в истории Кокандского ханства: участвовали в управлении, военной борьбе и политических союзах. Акбото бий, Кубат бий, Нусуп бий и Алымбек датка были влиятельными деятелями. Гражданская война в Кыргызстане в 1918-1920 годах отличалась сочетанием общероссийской борьбы и местных социальных, национальных и хозяйственных противоречий.",
+            "full": [
+                  "В истории Кокандского ханства кыргызские правители были не пассивными подданными, а активными участниками политики. Акбото бий, Кубат бий, Нусуп бий и Алымбек датка влияли на управление, военные решения, союзы и борьбу за власть. Их деятельность показывает, что кыргызы играли значительную роль в политической жизни Ферганы и соседних территорий.",
+                  "Гражданская война в Кыргызстане в 1918-1920 годах была частью борьбы за власть после революции. В регионе столкнулись сторонники Советской власти, антибольшевистские силы, басмаческое движение и местные интересы. Особенности войны были связаны с аграрными проблемами, национальным вопросом, слабостью транспорта и влиянием Ферганской долины. Итогом стало укрепление Советской власти."
+            ],
+            "important": [
+                  "Личности: Акбото бий, Кубат бий, Нусуп бий, Алымбек датка",
+                  "Место: Кокандское ханство и Фергана",
+                  "Дата: 1918-1920 годы",
+                  "Событие: гражданская война в Кыргызстане"
+            ]
+      },
+      {
+            "short": "Средневековые историко-архитектурные памятники Кыргызстана отражают развитие городов, торговли, религии и культуры. К ним относятся башня Бурана, Узгенский архитектурный комплекс, Таш-Рабат и другие памятники. Новый этап демократического развития Кыргызстана связан с независимостью, Конституцией, выборами, гражданским обществом и реформами.",
+            "full": [
+                  "Историко-архитектурные памятники средневекового Кыргызстана являются важными источниками по истории культуры. Башня Бурана связана с городом Баласагун и эпохой Караханидов. Узгенский комплекс показывает развитие архитектуры, ислама и городской жизни. Таш-Рабат связан с торговыми путями и караванной культурой. Эти памятники доказывают высокий уровень ремесла, строительства и связей по Великому шелковому пути.",
+                  "Кыргызстан на новом этапе демократического развития строит политическую систему независимого государства. Важными элементами стали Конституция, выборы, парламент, органы местного самоуправления, партии, СМИ и гражданское общество. Демократическое развитие проходит через реформы, общественные изменения и поиск баланса между устойчивостью государства, правами граждан и ответственностью власти."
+            ],
+            "important": [
+                  "Памятники: Бурана, Узген, Таш-Рабат",
+                  "Период: средние века",
+                  "Современность: Конституция, выборы, гражданское общество",
+                  "Событие: демократическое развитие Кыргызстана"
+            ]
+      }
+];
+
+    const ticketDetailsKg = [
+      {
+            "short": "«Кыргыз» этноними байыркы кытай булактарында «гэгунь/гяньгунь» сыяктуу аталыштар аркылуу биринчи жолу эскерилет. Теңир-Тоо жана Енисей кыргыз тарыхындагы маанилүү аймактар болуп эсептелет. Кыргызстанда Совет бийлиги 1917-жылдагы революциялардан кийин орноп, жаңы саясий доор башталган.",
+            "full": [
+                  "«Кыргыз» этноними тууралуу алгачкы жазма маалыматтар байыркы кытай жылнаамаларында кездешет. Бул аталыш кыргыздардын байыркы эл экенин жана Борбордук Азия тарыхындагы ордун көрсөтөт. Кыргыз тарыхында Енисей аймагы да, Теңир-Тоо да маанилүү: Енисей байыркы кыргыз мамлекеттүүлүгү менен, Теңир-Тоо азыркы Кыргызстан аймагы менен байланышат.",
+                  "Кыргызстанда Совет бийлиги 1917-жылдагы Февраль жана Октябрь революцияларынан кийин орной баштаган. 1918-жылдары шаарларда жана аймактарда советтик башкаруу күчөп, жаңы бийлик органдары түзүлгөн. Жер, коомдук башкаруу жана чарба тармагында өзгөрүүлөр жүргөн. Бул процесс жарандык согуш жана саясий каршылыктар менен коштолгон."
+            ],
+            "important": [
+                  "Этноним: кыргыз",
+                  "Булак: байыркы кытай жылнаамалары",
+                  "Жер: Енисей жана Теңир-Тоо",
+                  "Окуя: Совет бийлигинин орношу, 1917-1918-жылдар"
+            ]
+      },
+      {
+            "short": "Сактар байыркы көчмөн уруулар болуп, мал чарбачылыгы, аскердик өнөрү жана көрүстөн маданияты менен белгилүү. Үйсүндөр Жетисууда мамлекеттик бирикме түзүп, коңшу мамлекеттер менен байланышта болгон. Кыргыз Республикасынын эгемендүүлүгү 1991-жылдын 31-августунда жарыяланган.",
+            "full": [
+                  "Сактар Борбордук Азиянын кең аймактарында жашаган байыркы көчмөн уруулар болгон. Алар мал чарбачылыгы, жоокерчилик, ат минүү маданияты жана көрүстөндөрү менен белгилүү. Үйсүндөр Жетисуу аймагында күчтүү мамлекеттик бирикме түзүп, башкаруусу, аскери жана коңшу өлкөлөр менен дипломатиялык байланышы болгон.",
+                  "Кыргыз Республикасынын эгемендүүлүгүн жарыялоо СССРдин ыдырашы менен байланыштуу. 1991-жылдын 31-августунда мамлекеттик көз карандысыздык тууралуу чечим кабыл алынган. Ошондон тартып Кыргызстан ички жана тышкы саясатын өз алдынча жүргүзүүгө, Конституциясын кабыл алууга, мамлекеттик символдорун бекитүүгө жана эл аралык мамилелерди өнүктүрүүгө мүмкүнчүлүк алган."
+            ],
+            "important": [
+                  "Сактар: көчмөндөр, көрүстөндөр, аскер маданияты",
+                  "Үйсүндөр: Жетисуудагы мамлекеттик бирикме",
+                  "Дата: 1991-жылдын 31-августу",
+                  "Окуя: Кыргыз Республикасынын көз карандысыздыгы"
+            ]
+      },
+      {
+            "short": "Даван мамлекети Фергана өрөөнүндө жайгашып, шаарлары, дыйканчылыгы, соодасы жана атактуу аттары менен белгилүү болгон. Кыргыз элчилеринин Россияга биринчи барышы Атаке бийдин дипломатиялык саясаты менен байланыштуу.",
+            "full": [
+                  "Даван мамлекети Фергана өрөөнүндө жайгашкан байыркы мамлекет болгон. Ал шаар маданияты, сугат дыйканчылыгы, кол өнөрчүлүк жана Улуу Жибек жолу аркылуу соода жүргүзүүсү менен белгилүү. Кытай булактарында Даван өзүнүн күлүк аттары менен да айтылат. Бул мамлекет аймактагы отурукташкан маданияттын жогорку деңгээлин көрсөтөт.",
+                  "Кыргыз элчилеринин Россияга биринчи барышы Атаке бийдин тышкы саясаты менен байланыштуу. Атаке бий кыргыздардын абалын бекемдөө үчүн Россия менен саясий байланыш түзүүгө аракет кылган. Элчиликке А. Кучаков жана Шергазы сыяктуу өкүлдөр катышкан. Бул окуя Россияга кошулуу эмес, дипломатиялык мамиле түзүү аракети болгон."
+            ],
+            "important": [
+                  "Жер: Фергана өрөөнү",
+                  "Даван: шаар, дыйканчылык, аттар",
+                  "Инсан: Атаке бий",
+                  "Окуя: кыргыз элчилеринин Россияга барышы"
+            ]
+      },
+      {
+            "short": "Кыргызстандын аймагындагы таш жана коло доорунун эстеликтери бул жерде адамдар байыртан жашаганын далилдейт. Аларга турак жай издери, таш куралдар, петроглифтер жана көрүстөндөр кирет. Улуу Ата Мекендик согушта кыргызстандыктар фронтто салгылашып, тылда эмгектенип чоң салым кошкон.",
+            "full": [
+                  "Кыргызстандын аймагында таш жана коло дооруна таандык көптөгөн археологиялык эстеликтер табылган. Алар байыркы турак жайлар, таш куралдар, аска бетиндеги сүрөттөр, көрүстөндөр жана чарба издери болуп саналат. Бул табылгалар байыркы адамдардын аңчылык, жыйноочулук, кийин мал чарбачылык жана дыйканчылык менен алектенгенин көрсөтөт.",
+                  "Улуу Ата Мекендик согуш жылдарында кыргызстандыктар фронтко жөнөп, Москва, Сталинград жана башка салгылашууларда эрдик көрсөткөн. Д. Шопоков, Ч. Түлөбердиев сыяктуу баатырлар элдин эсинде калды. Кыргызстан тылда да чоң жардам берген: азык-түлүк, сырье, кийим-кече жөнөтүп, эвакуацияланган ишканаларды жана адамдарды кабыл алган."
+            ],
+            "important": [
+                  "Эстеликтер: турак жайлар, петроглифтер, көрүстөндөр",
+                  "Доор: таш жана коло доору",
+                  "Окуя: Улуу Ата Мекендик согуш, 1941-1945",
+                  "Роль: фронт жана тыл"
+            ]
+      },
+      {
+            "short": "VII-VIII кылымдарда Барсбек енисей кыргыздарынын өз алдынчалыгын бекемдөөгө аракет кылып, каган титулун алган. Совет бийлиги орногондон согушка чейинки мезгилде Кыргызстанда өнөр жай, кен казуу, энергетика жана фабрика-завод өндүрүшү өнүккөн.",
+            "full": [
+                  "Кыргыздардын Борбордук Азиядагы үстөмдүк үчүн күрөшү VII-VIII кылымдарда енисей кыргыздарынын күчөшү менен байланыштуу. Барсбек бул мезгилдин көрүнүктүү башкаруучусу болгон. Ал каган титулун алып, кыргыздардын саясий өз алдынчалыгын бекемдөөгө аракет кылган. Барсбектин ишмердиги кыргыз мамлекеттүүлүгүнүн маанилүү белгиси катары бааланат.",
+                  "Совет бийлиги орногондон Улуу Ата Мекендик согушка чейинки мезгилде Кыргызстанда индустриялаштыруу жүргөн. Кен казуу, көмүр, жеңил жана тамак-аш өнөр жайы, энергетика жана транспорт өнүккөн. Жаңы ишканалар ачылып, жумушчу кадрлар даярдалган. Бул өзгөрүүлөр республиканын чарбасын агрардык негизден өнөр жайлуу багытка бура баштаган."
+            ],
+            "important": [
+                  "Дата: VII-VIII кылымдар",
+                  "Инсан: Барсбек каган",
+                  "Окуя: өз алдынчалык үчүн күрөш",
+                  "Өнөр жай: 1941-жылга чейинки индустриялаштыруу"
+            ]
+      },
+      {
+            "short": "Кыргыз Улуу дөөлөтү IX кылымда Уйгур каганатын жеңгенден кийин кыргыздардын күчөшү менен байланыштуу. Алп Сол ошол доордун аскердик ишмери катары эскерилет. Коллективдештирүү жана көчмөндөрдү отурукташтыруу салттуу чарбаны өзгөртүп, колхоздук системаны күчөткөн.",
+            "full": [
+                  "Кыргыз Улуу дөөлөтү кыргыздардын орто кылымдагы эң маанилүү мамлекеттүүлүк этабы болуп саналат. IX кылымда Уйгур каганаты жеңилгенден кийин кыргыздардын таасири Борбордук Азияда күчөгөн. Мамлекет аскер күчүнө, көчмөн чарбага, уруулук бирикмелерге жана башкаруу системасына таянган. Алп Сол бул доордун аскердик элитасы менен байланышкан инсан катары айтылат.",
+                  "Совет бийлигинин агрардык саясаты коллективдештирүү жана көчмөн калкты отурукташтыруу аркылуу жүргүзүлгөн. Колхоздор жана совхоздор түзүлүп, жер менен мал жамааттык чарбага өткөрүлгөн. Бул саясат элдин күнүмдүк жашоосун, менчик түшүнүгүн жана чарба жүргүзүү жолун өзгөрткөн. Натыйжада советтик айыл чарба системасы бекемделген, бирок процесс оор болгон."
+            ],
+            "important": [
+                  "Дата: IX кылым",
+                  "Окуя: Кыргыз Улуу дөөлөтү",
+                  "Инсан: Алп Сол",
+                  "Агрардык саясат: коллективдештирүү жана отурукташтыруу"
+            ]
+      },
+      {
+            "short": "X - XII кылымдын башында Кыргызстан жана коңшу аймактарда Караханиддер, каракытайлар жана наймандар маанилүү роль ойногон. Караханиддер шаарларды, ислам маданиятын жана жазма салтты өнүктүргөн. Эгемендүү Кыргызстандын символдору жана Конституциясы мамлекеттин негизин бекемдеген.",
+            "full": [
+                  "X - XII кылымдын башында Караханиддер мамлекетинин ролу чоң болгон. Бул мезгилде шаарлар, соода, кол өнөрчүлүк, ислам маданияты жана жазма мурас өнүккөн. Кийин каракытайлар жана наймандар аймактагы саясий абалды өзгөрткөн. Бул доор Кыргызстандагы орто кылымдык мамлекеттүүлүктү жана маданий өнүгүүнү түшүнүү үчүн маанилүү.",
+                  "Кыргыз Республикасынын мамлекеттик символдору - туу, герб жана гимн - көз карандысыздыкты, элдин биримдигин жана тарыхый эс тутумду билдирет. Конституция мамлекеттин негизги мыйзамы болуп, жарандардын укуктарын, бийлик системасын, мамлекеттик түзүлүштү жана эгемендүүлүк принциптерин бекитет. Символдор жана Конституция көз карандысыз мамлекеттин укуктук негизин түзөт."
+            ],
+            "important": [
+                  "Период: X - XII кылымдын башы",
+                  "Мамлекет: Караханиддер",
+                  "Символдор: туу, герб, гимн",
+                  "Конституция: негизги мыйзам"
+            ]
+      },
+      {
+            "short": "Енисей кыргыздары көчмөн чарба, аскердик түзүлүш, уруулук коом жана бай маданиятка ээ болгон. 1926-жылы Кыргыз АССРи, 1936-жылы Кыргыз ССРи түзүлгөн. Ж. Абдрахманов, А. Орозбеков жана А. Сыдыков улуттук-мамлекеттик курулуш менен байланышкан.",
+            "full": [
+                  "Енисей кыргыздары мал чарбачылык, аңчылык, айрым жерлерде дыйканчылык, кол өнөрчүлүк жана аскер иши менен алектенген. Коомдук түзүлүшү уруу бирикмелерине, аскер күчүнө жана башчылардын бийлигине таянган. Алардын маданияты жазма эстеликтер, көрүстөндөр, курал-жарак, жасалгалар жана салттар аркылуу белгилүү.",
+                  "Совет мезгилинде кыргыз мамлекеттүүлүгү бир нече баскычтан өткөн. 1926-жылы Кыргыз Автономиялуу Советтик Социалисттик Республикасы түзүлгөн, ал эми 1936-жылы Кыргыз Советтик Социалисттик Республикасы СССРдин курамындагы союздук республика болгон. Ж. Абдрахманов, А. Орозбеков жана А. Сыдыков улуттук башкаруу, мамлекеттүүлүк жана саясий курулуш иштерине катышкан."
+            ],
+            "important": [
+                  "Енисей кыргыздары: чарба, аскер, маданият",
+                  "Дата: 1926-жыл - Кыргыз АССРи",
+                  "Дата: 1936-жыл - Кыргыз ССРи",
+                  "Инсандар: Ж. Абдрахманов, А. Орозбеков, А. Сыдыков"
+            ]
+      },
+      {
+            "short": "XIII кылымдын экинчи жарымы - XIV кылымда Кыргызстан аймагы монгол доорунан кийинки мамлекеттер, анын ичинде Хайду мамлекети менен байланышкан. Согуштан кийин 1945-1964-жылдары эл чарбасы калыбына келип, өнөр жай, айыл чарба, билим жана маданият өнүккөн; И. Раззаковдун ролу чоң болгон.",
+            "full": [
+                  "XIII кылымдын экинчи жарымы - XIV кылымда Кыргызстан тарыхы монгол баскынчылыгынан кийинки саясий өзгөрүүлөр менен байланыштуу болгон. Хайду мамлекети Борбордук Азиядагы бийлик үчүн күрөштө маанилүү орун ээлеген. Бул мезгилде чек аралар өзгөрүп, феодалдык мамилелер күчөп, калк көчүп-конуп, кыргыз жерлери чоң аймактык процесстерге тартылган.",
+                  "Улуу Ата Мекендик согуштан кийин Кыргызстан эл чарбасын калыбына келтирген. 1945-1964-жылдары өнөр жай, транспорт, айыл чарба, билим берүү жана маданият өнүккөн. И. Раззаков жетекчи катары кадр даярдоого, мектептерге, жогорку окуу жайларга жана маданий өнүгүүгө көңүл бурган. Республика калыбына келүүдөн акырындык менен жаңылануу этабына өткөн."
+            ],
+            "important": [
+                  "Период: XIII-XIV кылымдар",
+                  "Мамлекет: Хайду",
+                  "Период: 1945-1964-жылдар",
+                  "Инсан: И. Раззаков"
+            ]
+      },
+      {
+            "short": "Түндүк Кыргызстандын Россияга кошулушу XIX кылымда акырындап жүрүп, Россия империясы, Кокон хандыгы жана жергиликтүү лидерлердин саясаты менен байланышкан. Шабдан баатыр жана Байтик баатыр бул процесстерде белгилүү роль ойногон. Совет мезгилинде сабаттуулук, мектептер, жогорку окуу жайлар жана илим өнүккөн.",
+            "full": [
+                  "Түндүк Кыргызстандын Россияга кошулушу XIX кылымдагы узак саясий процесс болгон. Ага Кокон хандыгынын басымы, Россия империясынын кызыкчылыгы жана жергиликтүү кыргыз башчыларынын позициясы таасир эткен. Шабдан баатыр таасирдүү саясий лидер болгон, Байтик баатыр болсо кокондук таасирге каршы күрөшү менен белгилүү. Натыйжада аймак Россия империясынын башкаруу системасына кирген.",
+                  "Совет мезгилинде Кыргызстанда билим берүү жана илим тез өнүккөн. Мектептер, техникумдар, институттар ачылып, сабатсыздыкты жоюу иштери жүргүзүлгөн. Улуттук кадрлар даярдалып, илимий мекемелер пайда болгон. Табият, тарых, тил, экономика боюнча изилдөөлөр жүргүзүлгөн. Ошол эле учурда билим берүү советтик идеологиянын көзөмөлүндө турган."
+            ],
+            "important": [
+                  "Период: XIX кылым",
+                  "Жер: Түндүк Кыргызстан",
+                  "Инсандар: Шабдан баатыр, Байтик баатыр",
+                  "Совет мезгили: мектеп, ЖОЖ, илим"
+            ]
+      },
+      {
+            "short": "Кыргыздар Кокон хандыгынын саясатына каршы салыктар, зомбулук жана өз алдынчалыктын чектелиши үчүн күрөшкөн. Ажы бий, Тайлак баатыр жана Кубат бий бул каршылык менен байланышкан. Совет мезгилинде театр, сүрөт, скульптура, балет жана адабият өнүккөн; Г. Айтиев, Б. Бейшеналиева, О. Мануйлова, С. Чуйков белгилүү болгон.",
+            "full": [
+                  "Кыргыздардын Кокон хандыгынын баскынчыл саясатына каршы күрөшү оор салыктар, жергиликтүү башкарууга кийлигишүү жана аскердик кысым менен байланыштуу болгон. Ажы бий, Тайлак баатыр жана Кубат бий элдин кызыкчылыгын коргогон инсандар катары белгилүү. Бул күрөш кыргыздардын өз алдынчалыгын жана салттуу укуктарын сактоого умтулганын көрсөтөт.",
+                  "Совет мезгилинде Кыргызстан маданияты жаңы мекемелер аркылуу өнүккөн: театрлар, музейлер, сүрөт окуу жайлары, жазуучулар жана сүрөтчүлөр уюмдары түзүлгөн. Г. Айтиев сүрөт өнөрүнө, Б. Бейшеналиева балетке, О. Мануйлова скульптурага, С. Чуйков живопиське чоң салым кошкон. Маданият улуттук темаларды жана советтик идеологияны айкалыштырган."
+            ],
+            "important": [
+                  "Себеп: Кокондун салыгы жана басымы",
+                  "Инсандар: Ажы бий, Тайлак баатыр, Кубат бий",
+                  "Маданият: театр, сүрөт, балет, скульптура",
+                  "Ишмерлер: Г. Айтиев, Б. Бейшеналиева, О. Мануйлова, С. Чуйков"
+            ]
+      },
+      {
+            "short": "Хунндар Борбордук Азиядагы ири көчмөн бирикме болуп, түрк элдеринин тарыхына таасир эткен. Алардын аскердик жана мамлекеттик салты кийинки көчмөн дүйнөгө таасир калтырган. СССРдеги тоталитардык режимдин күчөшү массалык репрессияларга алып келип, алардын эстелиги «Ата-Бейит» менен байланышат.",
+            "full": [
+                  "Хунндар байыркы Борбордук Азиянын тарыхында маанилүү орун ээлейт. Алар күчтүү көчмөн бирикме түзүп, аскердик тартиби, башкаруусу жана кеңири тышкы байланыштары менен айырмаланган. Хунн доору кийин түрк элдеринин тарыхына таасир тийгизген, анткени көчмөн мамлекеттүүлүк, аскердик түзүлүш жана миграция салттары сакталып калган.",
+                  "1930-жылдары СССРде тоталитардык режим күчөгөн. Массалык репрессиялар саясий ишмерлерге, интеллигенцияга, маданият өкүлдөрүнө, дин кызматкерлерине жана жөнөкөй адамдарга тийген. Кыргызстанда репрессия курмандыктарынын эстелиги «Ата-Бейит» мемориалдык комплекси менен байланыштуу. Репрессиялар коомго, маданиятка жана улуттук элитага оор сокку болгон."
+            ],
+            "important": [
+                  "Хунндар: Борбордук Азиядагы көчмөн бирикме",
+                  "Мааниси: түрк тарыхына таасир",
+                  "Период: 1930-жылдардагы репрессиялар",
+                  "Эстелик: Ата-Бейит"
+            ]
+      },
+      {
+            "short": "Кыргыз элинин XVI кылымдагы калыптанышы узак этностук процесстин жыйынтыгы болгон. Мухаммед Кыргыз кыргыз урууларынын биригүүсү менен байланышкан инсан катары айтылат. Кара-Кыргыз автономиялуу облусу 1924-жылы түзүлүп, советтик кыргыз мамлекеттүүлүгүнө жол ачкан.",
+            "full": [
+                  "Кыргыз элинин калыптанышы көп кылымдарга созулган этностук процесс болгон. Ага уруулардын биригиши, жалпы аймак, тил, чарба жана маданият таасир эткен. XVI кылым бул процесстин маанилүү этабы катары каралат. Мухаммед Кыргыз, Тагай бий менен байланышкан тарыхый инсан катары, кыргыздардын биригүүсү жана этностук эс тутумунда маанилүү орун ээлейт.",
+                  "Кара-Кыргыз автономиялуу облусу 1924-жылдын 14-октябрында Орто Азиядагы улуттук-аймактык межелөөнүн жүрүшүндө түзүлгөн. Бул кыргыздардын советтик системада өзүнчө улуттук-саясий бирдик катары таанылышына шарт түзгөн. Аталган окуя кийин Кыргыз автономиясынын жана Кыргыз ССРинин түзүлүшүнө негиз болгон."
+            ],
+            "important": [
+                  "Период: XVI кылым",
+                  "Инсан: Мухаммед Кыргыз",
+                  "Дата: 1924-жылдын 14-октябры",
+                  "Окуя: Кара-Кыргыз автономиялуу облусу"
+            ]
+      },
+      {
+            "short": "1873-1876-жылдардагы элдик көтөрүлүш Кокон хандыгына каршы болуп, салыктарга, зомбулукка жана элдин оор абалына байланышкан. Исхак Асан уулу кыймылдын лидерлеринин бири болгон. 1917-жылы падышалык бийлик кулагандан кийин Убактылуу өкмөт жер жана улуттук маселелерди чечпей койгон.",
+            "full": [
+                  "1873-1876-жылдардагы элдик көтөрүлүш Кокон хандыгынын кризиси, оор салыктар, бийликтин зомбулугу жана элдин нааразычылыгы менен байланыштуу болгон. Исхак Асан уулу бул кыймылдын көрүнүктүү жетекчилеринин бири катары белгилүү. Көтөрүлүш хан бийлигине каршы багытталган, бирок Россия империясынын аймактагы күчөшү шартында басылган.",
+                  "1917-жылы Февраль революциясынан кийин падышалык самодержавие кулап, Кыргызстанда жаңы саясий кырдаал түзүлгөн. Убактылуу өкмөт реформаларды убада кылганы менен жер маселесин, көчүрүү саясатынын кесепеттерин жана улуттук теңсиздикти чечкен эмес. Бул коомдук нааразычылыкты күчөтүп, кийин советтик бийлик үчүн күрөшкө алып келген."
+            ],
+            "important": [
+                  "Период: 1873-1876-жылдар",
+                  "Инсан: Исхак Асан уулу",
+                  "Дата: 1917-жыл",
+                  "Маселе: жер жана улуттук теңсиздик"
+            ]
+      },
+      {
+            "short": "Түрк каганаттарынын доору мамлекеттүүлүк, аскердик түзүлүш, жазма маданият жана жалпы түрк салттары менен маанилүү. XIX кылымдын аягындагы Алай кыргыздары Курманжан датканын ишмердиги менен байланыштуу; ал лидер жана дипломат болгон.",
+            "full": [
+                  "Түрк каганаттары Борбордук Азиянын тарыхында чоң роль ойногон. Алар көчмөн мамлекеттүүлүктүн үлгүлөрүн, аскердик башкарууну, дипломатияны жана жазма маданиятты өнүктүргөн. Кийинки мамлекеттер бул саясий жана маданий салттарды уланткан. Кыргыз тарыхы үчүн бул доор тил, маданият, аскердик уюм жана жалпы түрк дүйнөсү менен байланыштуу.",
+                  "XIX кылымдын аягында Алай кыргыздары Кокон хандыгы кулагандан жана Россия империясы күчөгөндөн кийинки оор шартта жашаган. Курманжан датка Алайдын таанылган лидери болгон. Ал акылдуу саясатчы жана дипломат катары элди чоң кагылышуулардан сактоого аракет кылган. Анын ролу башкаруу, сүйлөшүү жана алай кыргыздарынын кызыкчылыгын коргоо менен байланыштуу."
+            ],
+            "important": [
+                  "Период: түрк каганаттарынын доору",
+                  "Мурас: бийлик, аскер, жазуу",
+                  "Жер: Алай",
+                  "Инсан: Курманжан датка"
+            ]
+      },
+      {
+            "short": "1898-жылдагы Андижан көтөрүлүшү Фергана өрөөнүндөгү антиколониялык жана диний-саясий кыймыл болгон. Мадали эшен жана Зияддин Максым уулу бул окуя менен байланышкан. Жер-суу реформасы жер менен сууну кайра бөлүштүрүп, жергиликтүү элдин абалын жакшыртууга багытталган.",
+            "full": [
+                  "Андижан көтөрүлүшү 1898-жылы Фергана өрөөнүндө болгон. Анын башында Мадали эшен турган, ал эми Зияддин Максым уулу кыймыл менен байланышкан инсандардын бири катары айтылат. Көтөрүлүштүн себептери колониялык бийликке нааразычылык, жер маселеси, социалдык чыңалуу жана диний-саясий маанай болгон. Кыймыл басылган, бирок каршылыктын маанилүү көрүнүшү болуп калган.",
+                  "Кыргызстандагы жер-суу реформасы колониялык саясаттан калган агрардык көйгөйлөрдү чечүүгө багытталган. Жер жана суу жергиликтүү калктын пайдасына кайра бөлүштүрүлүп, мурдагы теңсиздикти азайтуу аракети жасалган. Реформа жаңы чарба түзүлүшүнө шарт түзгөн, бирок аны ишке ашыруу кыйынчылыктар жана келишпестиктер менен коштолгон."
+            ],
+            "important": [
+                  "Дата: 1898-жыл",
+                  "Жер: Андижан жана Фергана өрөөнү",
+                  "Инсандар: Мадали эшен, Зияддин Максым уулу",
+                  "Реформа: жер жана суу"
+            ]
+      },
+      {
+            "short": "Махмуд Кашгари жана Жусуп Баласагуни түрк дүйнөсүнүн улуу жазма мурасын калтырган. Кашгари түрк тилдери жөнүндө эмгеги, Баласагуни «Кутадгу билиг» чыгармасы менен белгилүү. 1916-жылкы улуттук-боштондук кыймыл колониялык саясат, жер маселеси жана тыл жумуштарына алуу жарлыгы менен байланышкан.",
+            "full": [
+                  "Махмуд Кашгари жана Жусуп Баласагуни орто кылымдагы түрк маданиятынын улуу өкүлдөрү. Кашгари «Диван лугат ат-түрк» эмгегинде түрк тилдерин, урууларын жана маданиятын сүрөттөгөн. Баласагуни «Кутадгу билиг» чыгармасында адилет башкаруу, билим, адеп-ахлак жана мамлекет тууралуу ой айткан. Алардын мурасы түрк дүйнөсүнүн жазма маданиятынын бийик деңгээлин көрсөтөт.",
+                  "1916-жылкы кыргыз элинин улуттук-боштондук кыймылы Россия империясынын колониялык саясаты, жер маселеси, көчүрүү саясаты жана тыл жумуштарына алуу жөнүндөгү жарлык менен байланышкан. Көтөрүлүш ар кайсы аймактарда жүрүп, катуу басылган. Анын натыйжасында көп адам курман болуп, Үркүн окуясы болгон. Бул окуя кыргыз элинин тарыхый эс тутумунда өзгөчө орунда турат."
+            ],
+            "important": [
+                  "Инсан: Махмуд Кашгари",
+                  "Инсан: Жусуп Баласагуни",
+                  "Дата: 1916-жыл",
+                  "Окуя: улуттук-боштондук кыймыл жана Үркүн"
+            ]
+      },
+      {
+            "short": "Осмонаалы Сыдык уулу, Б. Солтоноев жана И. Арабаев кыргыз тарыхын, билим берүүнү жана жазма маданиятты өнүктүргөн алгачкы тарыхчы-агартуучулар болгон. Кыргыз Республикасынын тышкы саясаты коңшулар менен кызматташууга, эл аралык уюмдарга катышууга, коопсуздукка жана экономикага багытталган.",
+            "full": [
+                  "Кыргызстандын алгачкы тарыхчылары жана агартуучулары тарыхый эс тутумду сактоого жана билим берүүнү өнүктүрүүгө чоң салым кошкон. Осмонаалы Сыдык уулу жана Б. Солтоноев кыргыздардын өткөн тарыхы тууралуу маалыматтарды, санжыраларды жана тарыхый материалдарды жазган. И. Арабаев билим берүү, жазуу жана окуу китептерин даярдоо тармагында маанилүү иш кылган.",
+                  "Кыргыз Республикасынын эл аралык байланыштары көз карандысыздыктан кийин кеңейген. Кыргызстан коңшу мамлекеттер менен мамиле түзүп, БУУ, КМШ, ШКУ, ЕККУ сыяктуу уюмдарга катышат. Тышкы саясаттын негизги багыттары - коопсуздук, экономикалык кызматташтык, соода, маданий байланыш, жарандардын кызыкчылыгын коргоо жана мамлекеттик эгемендүүлүктү бекемдөө."
+            ],
+            "important": [
+                  "Инсандар: О. Сыдык уулу, Б. Солтоноев, И. Арабаев",
+                  "Тармак: тарых, агартуу, билим",
+                  "Тышкы саясат: коңшулар жана эл аралык уюмдар",
+                  "Максат: эгемендүүлүк, коопсуздук, кызматташтык"
+            ]
+      },
+      {
+            "short": "Түндүк Кыргызстандагы феодалдык ич ара согуштар уруу башчыларынын бийлик жана таасир үчүн күрөшү менен байланышкан. Боромбай бий жана Ормон хан ошол мезгилдин көрүнүктүү лидерлери болгон. Эгемендүү Кыргызстанда билим, илим жана маданият мектептер, ЖОЖдор, улуттук программалар жана маданий мурастар аркылуу өнүгүүдө.",
+            "full": [
+                  "Түндүк Кыргызстандагы феодалдык ич ара согуштар коомдун бөлүнүшүн жана жергиликтүү башчылардын бийлик, жайыт, таасир жана союздаштар үчүн күрөшүн көрсөтөт. Боромбай бий Ысык-Көл кыргыздарынын таасирдүү башкаруучусу болгон. Ормон хан кыргыз урууларын бириктирүүгө аракет кылган. Мындай чыр-чатактар коомду алсыратып, тышкы күчтөргө каршы турууну кыйындаткан.",
+                  "Эгемендүү Кыргызстанда билим берүү, илим жана маданият мамлекеттик өнүгүүнүн маанилүү бөлүгү болуп калды. Университеттер, эл аралык билим берүү байланыштары, кыргыз тилин, тарыхын жана маданиятын изилдөө өнүккөн. Маданий жашоо адабият, театр, кино, музыка, музейлер жана тарыхый мурастарды сактоо аркылуу байып жатат. Бул тармактар улуттук өздүктү бекемдейт."
+            ],
+            "important": [
+                  "Жер: Түндүк Кыргызстан",
+                  "Инсандар: Боромбай бий, Ормон хан",
+                  "Себеп: бийлик жана таасир үчүн күрөш",
+                  "Эгемендүү мезгил: билим, илим, маданият"
+            ]
+      },
+      {
+            "short": "Моголистан Чагатай улусунун чыгыш бөлүгүндө пайда болгон орто кылымдык мамлекет болуп, Теңир-Тоо жана Чыгыш Түркстан тарыхы менен байланышкан. Улуу Ата Мекендик согушта Кыргызстандын экономикасы фронт үчүн иштеп, өндүрүш, айыл чарба, эвакуацияланган ишканалар жана тыл эмгеги аркылуу жардам берген.",
+            "full": [
+                  "Моголистан мамлекети XIV кылымда Чыгыш Түркстан, Жетисуу жана Теңир-Тоо менен байланышкан аймакта түзүлгөн. Ал Борбордук Азиядагы монгол доорунан кийинки саясий тарыхтын бир бөлүгү болгон. Моголистанда түрдүү түрк жана монгол топтору жашаган, кыргыздар да аймактагы этностук жана саясий процесстерге катышкан. Бул мамлекет Кыргызстан орто кылым тарыхын түшүнүүдө маанилүү.",
+                  "Улуу Ата Мекендик согуш жылдарында Кыргызстандын экономикасы фронтко жардам берүүгө багытталган. Республика азык-түлүк, сырье, кийим, жылкы, металл жана башка продукция жөнөткөн. Кыргызстанга эвакуацияланган ишканалар жана адистер жайгаштырылган. Аялдар, карыялар жана өспүрүмдөр тылда эмгектенген. Бул жардам жалпы жеңишке кошулган чоң салым болгон."
+            ],
+            "important": [
+                  "Мамлекет: Моголистан",
+                  "Период: XIV-XVI кылымдар",
+                  "Согуш: 1941-1945-жылдар",
+                  "Роль: фронтко жардам жана тыл эмгеги"
+            ]
+      },
+      {
+            "short": "Жангир кожо жана Суранчы бийдин боштондук кыймылы Чыгыш Түркстандагы саясий күрөш жана кыргыз лидерлеринин аймактык окуяларга катышуусу менен байланышкан. 1965-1985-жылдардагы өнүккөн социализм мезгилинде Т. Усубалиевдин тушунда өнөр жай, курулуш жана инфраструктура өскөн, бирок токтоп калуу белгилери да күчөгөн.",
+            "full": [
+                  "Жангир кожо жана Суранчы бийдин боштондук кыймылы Чыгыш Түркстан жана ага коңшу аймактардагы саясий окуялар менен байланышкан. Жергиликтүү күчтөр тышкы үстөмдүккө жана саясий басымга каршы чыккан. Суранчы бийдин катышуусу кыргыз лидерлеринин аймактык процесстер менен байланышын көрсөтөт. Бул кыймыл элдин эркиндикке жана кызыкчылыгын коргоого умтулушун билдирет.",
+                  "1965-1985-жылдардагы «өнүккөн социализм» мезгилинде Кыргызстанды Т. Усубалиев узак убакыт жетектеген. Бул мезгилде өнөр жай объекттери, жолдор, турак жайлар, энергетика, айыл чарба, билим берүү жана маданият өнүккөн. Ошол эле учурда бюрократия, пландуу экономикага көз карандылык жана токтоп калуу көрүнүштөрү күчөгөн. Мезгил жетишкендиктерди да, карама-каршылыктарды да камтыган."
+            ],
+            "important": [
+                  "Жер: Чыгыш Түркстан",
+                  "Инсандар: Жангир кожо, Суранчы бий",
+                  "Период: 1965-1985-жылдар",
+                  "Инсан: Т. Усубалиев"
+            ]
+      },
+      {
+            "short": "Кыргыз башкаруучулары Кокон хандыгынын тарыхында башкаруу, аскердик күрөш жана саясий союздар аркылуу маанилүү роль ойногон. Акбото бий, Кубат бий, Нусуп бий жана Алымбек датка таасирдүү ишмерлер болгон. 1918-1920-жылдардагы жарандык согуш Кыргызстанда жалпы саясий күрөш менен жергиликтүү социалдык жана улуттук маселелердин айкалышы катары жүргөн.",
+            "full": [
+                  "Кокон хандыгынын тарыхында кыргыз башкаруучулары активдүү саясий күч болгон. Акбото бий, Кубат бий, Нусуп бий жана Алымбек датка башкарууга, аскердик чечимдерге, союздарга жана бийлик үчүн күрөшкө катышкан. Алардын ишмердиги кыргыздардын Фергана жана коңшу аймактардагы саясий турмушта маанилүү орун ээлегенин көрсөтөт.",
+                  "Кыргызстандагы жарандык согуш 1918-1920-жылдары революциядан кийинки бийлик үчүн күрөштүн бир бөлүгү болгон. Аймакта Совет бийлигинин жактоочулары, каршы күчтөр, басмачылык кыймыл жана жергиликтүү кызыкчылыктар кагылышкан. Согуштун өзгөчөлүгү жер маселеси, улуттук маселе, транспорттун начардыгы жана Фергана өрөөнүнүн таасири менен байланышкан. Натыйжада Совет бийлиги бекемделген."
+            ],
+            "important": [
+                  "Инсандар: Акбото бий, Кубат бий, Нусуп бий, Алымбек датка",
+                  "Жер: Кокон хандыгы жана Фергана",
+                  "Дата: 1918-1920-жылдар",
+                  "Окуя: Кыргызстандагы жарандык согуш"
+            ]
+      },
+      {
+            "short": "Кыргызстандын орто кылымдагы тарыхый-архитектуралык эстеликтери шаар маданиятын, сооданы, динди жана курулуш өнөрүн көрсөтөт. Бурана, Өзгөн комплекси, Таш-Рабат сыяктуу эстеликтер маанилүү. Кыргызстандагы демократиялык өнүгүүнүн жаңы этабы көз карандысыздык, Конституция, шайлоо, жарандык коом жана реформалар менен байланышкан.",
+            "full": [
+                  "Кыргызстандын орто кылымдагы тарыхый-архитектуралык эстеликтери маданият тарыхынын маанилүү булагы болуп саналат. Бурана мунарасы Баласагун шаары жана Караханиддер доору менен байланышкан. Өзгөн комплекси ислам архитектурасын жана шаар маданиятын көрсөтөт. Таш-Рабат кербен жолдору жана соода маданияты менен белгилүү. Бул эстеликтер Улуу Жибек жолу аркылуу байланыштардын күчтүү болгонун далилдейт.",
+                  "Кыргызстан демократиялык өнүгүүнүн жаңы этабында көз карандысыз мамлекеттин саясий системасын түзүп жатат. Конституция, шайлоо, парламент, жергиликтүү өз алдынча башкаруу, партиялар, маалымат каражаттары жана жарандык коом маанилүү орунга ээ. Демократиялык өнүгүү реформалар, коомдук өзгөрүүлөр, жарандардын укуктары жана бийликтин жоопкерчилиги аркылуу жүрөт."
+            ],
+            "important": [
+                  "Эстеликтер: Бурана, Өзгөн, Таш-Рабат",
+                  "Период: орто кылымдар",
+                  "Азыркы мезгил: Конституция, шайлоо, жарандык коом",
+                  "Окуя: демократиялык өнүгүү"
+            ]
+      }
+];
+
+    ticketDetails.length = tickets.length;
+    ticketDetailsKg.length = tickets.length;
+
+    const ticketGrid = document.querySelector("#ticketGrid");
+    const chosenTicket = document.querySelector("#chosenTicket");
+    const ticketModal = document.querySelector("#ticketModal");
+    const modalBadge = document.querySelector("#modalBadge");
+    const modalTitle = document.querySelector("#modalTitle");
+    const modalBody = document.querySelector("#modalBody");
+    const modalClose = document.querySelector("#modalClose");
+    const themeStorageKey = "kgStudyTheme";
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    let activeTicketIndex = -1;
+    let currentLang = localStorage.getItem("historyExamLang") || "ru";
+
+    const uiText = {
+      ru: {
+        pageTitle: "Госэкзамен по истории Кыргызстана",
+        pageSubtitle: "9 класс - устный ответ, билеты, повторение и тренажер",
+        backHome: "← Ко всем предметам",
+        eyebrow: "9 класс • Кыргызстан • история",
+        heroTitle: "Готовь ответ как историк",
+        heroCopy: "Эта страница собрана по открытым материалам KAO, опубликованным экзаменационным вопросам и школьным источникам. Здесь не копируются готовые ответы из пособий: каждый блок помогает самому построить сильный устный ответ - с датой, причиной, личностями, итогом и значением.",
+        trainTickets: "Тренировать билеты",
+        answerPlan: "План ответа",
+        miniCheck: "Билеты",
+        ticket: "Билет",
+        active: "Тренируй сейчас",
+        typical: "Типовой блок",
+        open: "Открыть полный разбор",
+        chosenDefault: "Выбери билет для устной тренировки",
+        chosenOpen: "открыт полный разбор",
+        randomOpen: "открыт готовый ответ",
+        modalQuestions: "Вопросы билета",
+        modalFull: "Полный текст для обучения",
+        modalShort: "Короткий ответ",
+        modalImportant: "Самое важное",
+        fullPage: "Полный ответ",
+        modalCtaText: "Для спокойного чтения открой отдельную страницу: там ответ шире, удобнее и с навигацией по билетам."
+      },
+      kg: {
+        pageTitle: "Кыргызстан тарыхы боюнча мамлекеттик экзамен",
+        pageSubtitle: "9-класс - оозеки жооп, билеттер, кайталоо жана тренажер",
+        backHome: "← Бардык предметтерге",
+        eyebrow: "9-класс • Кыргызстан • тарых",
+        heroTitle: "Жоопту кыргызча даярда",
+        heroCopy: "Бул баракча KAO материалдарына, жарыяланган экзамендик суроолорго жана мектептик булактарга таянып түзүлдү. Максат - даяр жоопту жаттатуу эмес, билетке кыргызча так, иреттүү жана далилдүү жооп берүүгө үйрөтүү.",
+        trainTickets: "Билеттерди машыктыруу",
+        answerPlan: "Жооптун планы",
+        miniCheck: "Билеттер",
+        ticket: "Билет",
+        active: "Азыр даярдан",
+        typical: "Типтүү блок",
+        open: "Толук талдоону ачуу",
+        chosenDefault: "Оозеки машыгуу үчүн билет танда",
+        chosenOpen: "толук талдоо ачылды",
+        randomOpen: "даяр жооп ачылды",
+        modalQuestions: "Билеттин суроолору",
+        modalFull: "Окутуу үчүн толук текст",
+        modalShort: "Кыска жооп",
+        modalImportant: "Эң маанилүүсү",
+        fullPage: "Толук жооп",
+        modalCtaText: "Жоопту ыңгайлуу окуу үчүн өзүнчө баракты ач: ал жерде жооп кеңирээк жана билеттер боюнча өтүү бар."
+      }
+    };
+
+    function t(key) {
+      return uiText[currentLang][key] || uiText.ru[key] || key;
+    }
+
+    function currentTheme() {
+      return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    }
+
+    function themeIcon(theme = currentTheme()) {
+      return theme === "dark"
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m17.1-7.1-1.4 1.4M6.3 17.7l-1.4 1.4m14.2 0-1.4-1.4M6.3 6.3 4.9 4.9"></path></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"></path></svg>';
+    }
+
+    function updateThemeButtons() {
+      document.querySelectorAll("[data-theme-toggle]").forEach(button => {
+        const theme = currentTheme();
+        const label = theme === "dark" ? "Включить белую тему" : "Включить черную тему";
+        button.setAttribute("aria-label", label);
+        button.setAttribute("title", label);
+        button.innerHTML = themeIcon(theme);
+      });
+    }
+
+    function applyTheme(theme = currentTheme()) {
+      const nextTheme = theme === "dark" ? "dark" : "light";
+      document.documentElement.dataset.theme = nextTheme;
+      if (themeMeta) themeMeta.setAttribute("content", nextTheme === "dark" ? "#09111d" : "#f7f7f2");
+      try {
+        localStorage.setItem(themeStorageKey, nextTheme);
+      } catch {
+        // The theme still works for the current session without storage.
+      }
+      updateThemeButtons();
+    }
+
+    function ticketUrl(index) {
+      return `ticket-answer.html?ticket=${index + 1}&lang=${currentLang}`;
+    }
+
+    function storeTicketSnapshot(index) {
+      const ticket = activeTickets()[index];
+      const details = activeDetails()[index];
+      if (!ticket || !details) return;
+      try {
+        localStorage.setItem("historyTicketAnswer", JSON.stringify({
+          index,
+          lang: currentLang,
+          ticket,
+          details,
+          savedAt: Date.now()
+        }));
+      } catch {
+        // The answer page can still load its data from history-exam.html when hosted.
+      }
+    }
+
+    function activeTickets() {
+      return tickets;
+    }
+
+    function activeDetails() {
+      return currentLang === "kg" ? ticketDetailsKg : ticketDetails;
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLang === "kg" ? "ky" : "ru";
+      document.querySelectorAll("[data-lang]").forEach(button => {
+        button.classList.toggle("active", button.dataset.lang === currentLang);
+      });
+      document.querySelectorAll("[data-i18n]").forEach(node => {
+        node.textContent = t(node.dataset.i18n);
+      });
+      chosenTicket.textContent = t("chosenDefault");
+      renderTickets(activeTicketIndex);
+    }
+
+    function renderTickets(activeIndex = -1) {
+      const sourceTickets = activeTickets();
+      ticketGrid.innerHTML = sourceTickets.map((ticket, index) => `
+        <article class="ticket-card" role="button" tabindex="0" data-ticket="${index}" style="--accent:${activeIndex === index ? "#c74343" : "#d89026"}">
+          <span class="chip">${t("ticket")} ${index + 1}</span>
+          <h4>${activeIndex === index ? t("active") : t("typical")}</h4>
+          <ol>
+            <li>${ticket[0]}</li>
+            <li>${ticket[1]}</li>
+          </ol>
+          <div class="ticket-actions">
+            <span class="open-hint">${t("open")}</span>
+            <a class="answer-page-link" href="${ticketUrl(index)}" data-answer-link="${index}">${t("fullPage")}</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function openTicket(index) {
+      const ticket = activeTickets()[index];
+      const details = activeDetails()[index];
+      if (!ticket || !details) return;
+
+      activeTicketIndex = index;
+      chosenTicket.textContent = `${t("ticket")} ${index + 1}: ${t("chosenOpen")}`;
+      modalBadge.textContent = `${t("ticket")} ${index + 1}`;
+      modalTitle.textContent = `${ticket[0]} + ${ticket[1]}`;
+      modalBody.innerHTML = `
+        <section class="modal-section">
+          <h4>${t("modalQuestions")}</h4>
+          <ol class="ticket-questions">
+            <li>${ticket[0]}</li>
+            <li>${ticket[1]}</li>
+          </ol>
+        </section>
+        <section class="modal-section">
+          <h4>${t("modalShort")}</h4>
+          <p>${details.short}</p>
+        </section>
+        <section class="modal-section">
+          <h4>${t("modalFull")}</h4>
+          ${details.full.map(paragraph => `<p>${paragraph}</p>`).join("")}
+        </section>
+        <section class="modal-section">
+          <h4>${t("modalImportant")}</h4>
+          <ul class="key-list">
+            ${details.important.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </section>
+        <section class="modal-section modal-cta">
+          <p>${t("modalCtaText")}</p>
+          <a class="primary" href="${ticketUrl(index)}" data-modal-answer="${index}">${t("fullPage")}</a>
+        </section>
+      `;
+
+      ticketModal.hidden = false;
+      document.body.classList.add("modal-open");
+      requestAnimationFrame(() => {
+        ticketModal.classList.add("open");
+        modalClose.focus({ preventScroll: true });
+      });
+    }
+
+    function closeTicket() {
+      ticketModal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+      const returnTarget = activeTicketIndex >= 0 ? document.querySelector(`[data-ticket="${activeTicketIndex}"]`) : null;
+      window.setTimeout(() => {
+        ticketModal.hidden = true;
+        if (returnTarget) returnTarget.focus({ preventScroll: true });
+      }, 220);
+    }
+
+    document.addEventListener("click", event => {
+      const themeButton = event.target.closest("[data-theme-toggle]");
+      if (themeButton) {
+        applyTheme(currentTheme() === "dark" ? "light" : "dark");
+        return;
+      }
+
+      const answerLink = event.target.closest("[data-answer-link], [data-modal-answer]");
+      if (answerLink) {
+        storeTicketSnapshot(Number(answerLink.dataset.answerLink ?? answerLink.dataset.modalAnswer));
+      }
+    });
+
+    document.querySelector("#randomTicket").addEventListener("click", () => {
+      const index = Math.floor(Math.random() * activeTickets().length);
+      chosenTicket.textContent = `${t("ticket")} ${index + 1}: ${t("randomOpen")}`;
+      renderTickets(index);
+      document.querySelectorAll(".ticket-card")[index].scrollIntoView({ behavior: "smooth", block: "center" });
+      openTicket(index);
+    });
+
+    document.querySelectorAll("[data-lang]").forEach(button => {
+      button.addEventListener("click", () => {
+        currentLang = button.dataset.lang;
+        localStorage.setItem("historyExamLang", currentLang);
+        activeTicketIndex = -1;
+        applyLanguage();
+      });
+    });
+
+    ticketGrid.addEventListener("click", event => {
+      if (event.target.closest("[data-answer-link]")) return;
+      const card = event.target.closest("[data-ticket]");
+      if (!card) return;
+      openTicket(Number(card.dataset.ticket));
+    });
+
+    ticketGrid.addEventListener("keydown", event => {
+      if (event.target.closest("[data-answer-link]")) return;
+      const card = event.target.closest("[data-ticket]");
+      if (!card) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openTicket(Number(card.dataset.ticket));
+      }
+    });
+
+    modalClose.addEventListener("click", closeTicket);
+
+    ticketModal.addEventListener("click", event => {
+      if (event.target === ticketModal) closeTicket();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !ticketModal.hidden) {
+        closeTicket();
+      }
+    });
+
+    const quizForm = document.querySelector("#quizForm");
+    if (quizForm) quizForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const correct = [0, 1, 0];
+      let score = 0;
+      for (let index = 0; index < correct.length; index += 1) {
+        const picked = document.querySelector(`input[name="q${index}"]:checked`);
+        if (picked && Number(picked.value) === correct[index]) score += 1;
+      }
+      const text = score === correct.length
+        ? "Ответы отмечены верно."
+        : "Есть ошибки в фактах.";
+      document.querySelector("#quizResult").innerHTML = `<div class="result"><strong>${score}/${correct.length}</strong><br>${text}</div>`;
+    });
+
+    applyTheme(currentTheme());
+    applyLanguage();
+  </script>
+</body>
+</html>
